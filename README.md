@@ -4,6 +4,8 @@ Repositório para a criação de Banco de Dados ficcional relativo à rotinas de
 
 
 Projeto:
+- Teste
+  - Modelagem
 • Defina uma equipe de no máximo 3 pessoas;
 • Escolha um dos minimundos abaixo e desenvolva o seu projeto;
 • Elabora os diagramas do minimundo (domínios de negócio) escolhido:
