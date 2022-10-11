@@ -5,335 +5,296 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema db_SaudeMenos
+-- Schema Saude_menos
 -- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `Saude_menos` ;
+USE `Saude_menos` ;
 
 -- -----------------------------------------------------
--- Schema db_SaudeMenos
+-- Table `Saude_menos`.`Enderecos`
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `db_SaudeMenos` ;
-USE `db_SaudeMenos` ;
-
--- -----------------------------------------------------
--- Table `db_SaudeMenos`.`Enderecos`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db_SaudeMenos`.`Enderecos` (
+CREATE TABLE IF NOT EXISTS `Saude_menos`.`Enderecos` (
   `id_endereco` INT NOT NULL AUTO_INCREMENT,
-  `CEP` INT NOT NULL,
-  `numero` INT NOT NULL,
-  `complemento` VARCHAR(70) NULL,
-  `rua` VARCHAR(45) NOT NULL,
+  `cep` CHAR(11) NOT NULL,
+  `rua` VARCHAR(90) NULL,
+  `numero` INT NULL,
   `bairro` VARCHAR(45) NULL,
   `estado` CHAR(2) NULL,
   PRIMARY KEY (`id_endereco`))
 ENGINE = InnoDB;
 
+
 -- -----------------------------------------------------
--- Table `db_SaudeMenos`.`Telefones`
+-- Table `Saude_menos`.`Telefones`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db_SaudeMenos`.`Telefones` (
-  `num_telefone` CHAR(9) NOT NULL,
+CREATE TABLE IF NOT EXISTS `Saude_menos`.`Telefones` (
   `ddd` CHAR(2) NOT NULL,
-  PRIMARY KEY (`num_telefone`, `ddd`))
+  `num_telefone` VARCHAR(9) NOT NULL,
+  PRIMARY KEY (`ddd`, `num_telefone`))
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `db_SaudeMenos`.`Hospitais`
+-- Table `Saude_menos`.`Hospitais`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db_SaudeMenos`.`Hospitais` (
-  `CNES` CHAR(7) NOT NULL,
-  `CNPJ` CHAR(14) NOT NULL,
-  `Nome` VARCHAR(90) NOT NULL,
-  PRIMARY KEY (`CNES`))
-ENGINE = InnoDB;
-
--- -----------------------------------------------------
--- Table `db_SaudeMenos`.`Laboratorios`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db_SaudeMenos`.`Laboratorios` (
-  `CNES` CHAR(7) NOT NULL,
-  `id_laboratorio` INT NOT NULL,
-  `nome_laboratorio` VARCHAR(90) NOT NULL,
-  PRIMARY KEY (`CNES`),
-  UNIQUE INDEX `id_laboratorio_UNIQUE` (`id_laboratorio` ASC) VISIBLE,
-  UNIQUE INDEX `Hospitais_CNES_UNIQUE` (`CNES`) INVISIBLE)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `db_SaudeMenos`.`Pacientes`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db_SaudeMenos`.`Pacientes` (
-  `num_prontuario` INT NOT NULL AUTO_INCREMENT,
-  `Nome` VARCHAR(90) NOT NULL,
-  `NomeSocial` VARCHAR(90) NULL,
-  `CPF` CHAR(11) NOT NULL,
-  `Email` VARCHAR(45) NULL,
-  `Sexo` VARCHAR(45) NOT NULL,
+CREATE TABLE IF NOT EXISTS `Saude_menos`.`Hospitais` (
+  `cnes` VARCHAR(7) NOT NULL,
+  `nome` VARCHAR(45) NOT NULL,
+  `cnpj` CHAR(14) NULL,
   `Enderecos_id_endereco` INT NOT NULL,
-  `Telefones_num_telefone` CHAR(9) NOT NULL,
   `Telefones_ddd` CHAR(2) NOT NULL,
-  PRIMARY KEY (`num_prontuario`),
-  UNIQUE INDEX `Email_UNIQUE` (`Email` ASC) VISIBLE,
-  INDEX `fk_Pacientes_Enderecos1_idx` (`Enderecos_id_endereco` ASC) VISIBLE,
-  INDEX `fk_Pacientes_Telefones1_idx` (`Telefones_num_telefone` ASC, `Telefones_ddd` ASC) VISIBLE,
-  CONSTRAINT `fk_Pacientes_Enderecos1`
+  `Telefones_num_telefone` VARCHAR(9) NOT NULL,
+  PRIMARY KEY (`cnes`),
+  INDEX `fk_Hospitais_Enderecos1_idx` (`Enderecos_id_endereco` ASC) VISIBLE,
+  INDEX `fk_Hospitais_Telefones1_idx` (`Telefones_ddd` ASC, `Telefones_num_telefone` ASC) VISIBLE,
+  CONSTRAINT `fk_Hospitais_Enderecos1`
     FOREIGN KEY (`Enderecos_id_endereco`)
-    REFERENCES `db_SaudeMenos`.`Enderecos` (`id_endereco`)
+    REFERENCES `Saude_menos`.`Enderecos` (`id_endereco`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Pacientes_Telefones1`
-    FOREIGN KEY (`Telefones_num_telefone` , `Telefones_ddd`)
-    REFERENCES `db_SaudeMenos`.`Telefones` (`num_telefone` , `ddd`)
+  CONSTRAINT `fk_Hospitais_Telefones1`
+    FOREIGN KEY (`Telefones_ddd` , `Telefones_num_telefone`)
+    REFERENCES `Saude_menos`.`Telefones` (`ddd` , `num_telefone`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `db_SaudeMenos`.`Exames`
+-- Table `Saude_menos`.`Ambulatorios`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db_SaudeMenos`.`Exames` (
-  `Data` DATETIME NULL,
-  `id_exame` INT NOT NULL,
-  `data-solicitacao` DATETIME NOT NULL,
-  `data-realizacao` DATETIME NOT NULL,
+CREATE TABLE IF NOT EXISTS `Saude_menos`.`Ambulatorios` (
+  `id_ambulatorios` INT NOT NULL AUTO_INCREMENT,
+  `especialidade` VARCHAR(45) NOT NULL,
+  `Hospitais_cnes` VARCHAR(7) NOT NULL,
+  PRIMARY KEY (`id_ambulatorios`, `Hospitais_cnes`),
+  INDEX `fk_Ambulatorios_Hospitais1_idx` (`Hospitais_cnes` ASC) VISIBLE,
+  CONSTRAINT `fk_Ambulatorios_Hospitais1`
+    FOREIGN KEY (`Hospitais_cnes`)
+    REFERENCES `Saude_menos`.`Hospitais` (`cnes`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Saude_menos`.`Laboratorios`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Saude_menos`.`Laboratorios` (
+  `cnes` VARCHAR(7) NOT NULL,
+  `id_laboratorio` INT NOT NULL,
+  `nome` VARCHAR(90) NOT NULL,
+  PRIMARY KEY (`cnes`),
+  UNIQUE INDEX `id_laboratorio_UNIQUE` (`id_laboratorio` ASC) VISIBLE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Saude_menos`.`Solicitacoes`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Saude_menos`.`Solicitacoes` (
+  `Hospitais_cnes` VARCHAR(7) NOT NULL,
+  `Laboratorios_cnes` VARCHAR(7) NOT NULL,
+  `id_solicitacao` INT NOT NULL AUTO_INCREMENT,
+  `data` DATETIME NOT NULL,
+  PRIMARY KEY (`id_solicitacao`, `Hospitais_cnes`, `Laboratorios_cnes`),
+  INDEX `fk_Hospitais_has_Laboratorios_Laboratorios1_idx` (`Laboratorios_cnes` ASC) VISIBLE,
+  INDEX `fk_Hospitais_has_Laboratorios_Hospitais_idx` (`Hospitais_cnes` ASC) VISIBLE,
+  CONSTRAINT `fk_Hospitais_has_Laboratorios_Hospitais`
+    FOREIGN KEY (`Hospitais_cnes`)
+    REFERENCES `Saude_menos`.`Hospitais` (`cnes`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Hospitais_has_Laboratorios_Laboratorios1`
+    FOREIGN KEY (`Laboratorios_cnes`)
+    REFERENCES `Saude_menos`.`Laboratorios` (`cnes`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Saude_menos`.`Pacientes`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Saude_menos`.`Pacientes` (
+  `num_prontuario` INT NOT NULL AUTO_INCREMENT,
+  `cpf` CHAR(11) NOT NULL,
+  `nome` VARCHAR(90) NOT NULL,
+  `nome_social` VARCHAR(90) NULL DEFAULT '',
+  `email` VARCHAR(45) NULL,
+  `sexo` CHAR(1) NOT NULL,
+  `Enderecos_id_endereco` INT NOT NULL,
+  `Telefones_ddd` CHAR(2) NOT NULL,
+  `Telefones_num_telefone` VARCHAR(9) NOT NULL,
+  PRIMARY KEY (`num_prontuario`),
+  UNIQUE INDEX `cpf_UNIQUE` (`cpf` ASC) VISIBLE,
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE,
+  INDEX `fk_Pacientes_Enderecos1_idx` (`Enderecos_id_endereco` ASC) VISIBLE,
+  INDEX `fk_Pacientes_Telefones1_idx` (`Telefones_ddd` ASC, `Telefones_num_telefone` ASC) VISIBLE,
+  CONSTRAINT `fk_Pacientes_Enderecos1`
+    FOREIGN KEY (`Enderecos_id_endereco`)
+    REFERENCES `Saude_menos`.`Enderecos` (`id_endereco`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Pacientes_Telefones1`
+    FOREIGN KEY (`Telefones_ddd` , `Telefones_num_telefone`)
+    REFERENCES `Saude_menos`.`Telefones` (`ddd` , `num_telefone`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+PACK_KEYS = DEFAULT;
+
+
+-- -----------------------------------------------------
+-- Table `Saude_menos`.`Exames`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Saude_menos`.`Exames` (
+  `id_exame` INT NOT NULL AUTO_INCREMENT,
+  `data_solicitacao` DATE NOT NULL,
+  `data_realizacao` DATETIME NULL,
   `grupo_exame` CHAR(1) NOT NULL,
   `cod_exame` CHAR(7) NOT NULL,
-  `nome_exame` VARCHAR(45) NOT NULL,
-  `Laboratorios_CNES` CHAR(7) NOT NULL,
+  `nome_exame` VARCHAR(90) NULL,
+  `Laboratorios_cnes` VARCHAR(7) NOT NULL,
   `Pacientes_num_prontuario` INT NOT NULL,
   PRIMARY KEY (`id_exame`),
-  INDEX `fk_Exames_Laboratorios1_idx` (`Laboratorios_CNES` ASC) VISIBLE,
+  INDEX `fk_Exames_Laboratorios1_idx` (`Laboratorios_cnes` ASC) VISIBLE,
   INDEX `fk_Exames_Pacientes1_idx` (`Pacientes_num_prontuario` ASC) VISIBLE,
   CONSTRAINT `fk_Exames_Laboratorios1`
-    FOREIGN KEY (`Laboratorios_CNES`)
-    REFERENCES `db_SaudeMenos`.`Laboratorios` (`CNES`)
+    FOREIGN KEY (`Laboratorios_cnes`)
+    REFERENCES `Saude_menos`.`Laboratorios` (`cnes`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Exames_Pacientes1`
     FOREIGN KEY (`Pacientes_num_prontuario`)
-    REFERENCES `db_SaudeMenos`.`Pacientes` (`num_prontuario`)
+    REFERENCES `Saude_menos`.`Pacientes` (`num_prontuario`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `db_SaudeMenos`.`Ambulatorios`
+-- Table `Saude_menos`.`Medicos`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db_SaudeMenos`.`Ambulatorios` (
-  `id_ambulatorio` INT NOT NULL AUTO_INCREMENT,
-  `especialidade` VARCHAR(45) NOT NULL,
-  `Hospitais_CNES` VARCHAR(7) NOT NULL,
-  PRIMARY KEY (`id_ambulatorio`, `Hospitais_CNES`),
-  INDEX `fk_Ambulatorios_Hospitais1_idx` (`Hospitais_CNES` ASC) VISIBLE,
-  CONSTRAINT `fk_Ambulatorios_Hospitais1`
-    FOREIGN KEY (`Hospitais_CNES`)
-    REFERENCES `db_SaudeMenos`.`Hospitais` (`CNES`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
-ENGINE = InnoDB;
-
--- ERRO
--- -----------------------------------------------------
--- Table `db_SaudeMenos`.`Pessoal de apoio`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db_SaudeMenos`.`Pessoal de apoio` (
-  `CPF` CHAR(11) NOT NULL,
-  `Nome` VARCHAR(90) NOT NULL,
-  `Matricula(UN)` INT NOT NULL AUTO_INCREMENT,
-  `NomeSocial` VARCHAR(90) NULL,
-  `Sexo` CHAR(1) NOT NULL,
-  `Email` VARCHAR(45) NULL,
-  `Salario` DECIMAL(10,2) NOT NULL,
-  `Ambulatorios_id_ambulatorio` INT NOT NULL,
-  `Ambulatorios_Hospitais_CNES` VARCHAR(7) NOT NULL,
+CREATE TABLE IF NOT EXISTS `Saude_menos`.`Medicos` (
+  `cpf` CHAR(11) NOT NULL,
+  `crm` VARCHAR(8) NULL COMMENT 'Antes era subdividida em duas colunas, UF-CRM e CRM. Agora, quando for fazer a inserção de dados, adicionar a UF nos caracteres\nEx.:\nPE1025',
+  `nome` VARCHAR(90) NOT NULL,
+  `nome_social` VARCHAR(90) NULL DEFAULT '',
+  `rqe` CHAR(4) NULL,
+  `especialidade` VARCHAR(45) NULL,
+  `sexo` CHAR(1) NOT NULL,
+  `email` VARCHAR(45) NULL,
+  `salario` DECIMAL(10,2) NULL,
+  `situacao` BIT NOT NULL,
   `Enderecos_id_endereco` INT NOT NULL,
-  `Telefones_num_telefone` CHAR(9) NOT NULL,
   `Telefones_ddd` CHAR(2) NOT NULL,
-  PRIMARY KEY (`CPF`),
-  UNIQUE INDEX `Email_UNIQUE` (`Email` ASC) VISIBLE,
-  INDEX `fk_Pessoal de apoio_Ambulatorios1_idx` (`Ambulatorios_id_ambulatorio` ASC, `Ambulatorios_Hospitais_CNES` ASC) VISIBLE,
-  INDEX `fk_Pessoal de apoio_Enderecos1_idx` (`Enderecos_id_endereco` ASC) VISIBLE,
-  INDEX `fk_Pessoal de apoio_Telefones1_idx` (`Telefones_num_telefone` ASC, `Telefones_ddd` ASC) VISIBLE,
-  CONSTRAINT `fk_Pessoal de apoio_Ambulatorios1`
-    FOREIGN KEY (`Ambulatorios_id_ambulatorio` , `Ambulatorios_Hospitais_CNES`)
-    REFERENCES `db_SaudeMenos`.`Ambulatorios` (`id_ambulatorio` , `Hospitais_CNES`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Pessoal de apoio_Enderecos1`
-    FOREIGN KEY (`Enderecos_id_endereco`)
-    REFERENCES `db_SaudeMenos`.`Enderecos` (`id_endereco`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Pessoal de apoio_Telefones1`
-    FOREIGN KEY (`Telefones_num_telefone` , `Telefones_ddd`)
-    REFERENCES `db_SaudeMenos`.`Telefones` (`num_telefone` , `ddd`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `db_SaudeMenos`.`Consultam`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db_SaudeMenos`.`Consultam` (
-  `Data_consulta` DATETIME NOT NULL,
-  PRIMARY KEY (`Data_consulta`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `db_SaudeMenos`.`Medicos`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db_SaudeMenos`.`Medicos` (
-  `CPF` VARCHAR(45) NOT NULL,
-  `CRM` INT NOT NULL,
-  `UF_CRM` CHAR(2) NOT NULL,
-  `Nome` VARCHAR(90) NOT NULL,
-  `NomeSocial` VARCHAR(90) NULL,
-  `RQE` CHAR(4) NULL,
-  `Especialidade` VARCHAR(45) NOT NULL,
-  `Sexo` CHAR(1) NOT NULL,
-  `Email` VARCHAR(45) NOT NULL,
-  `Salario` DECIMAL(10,2) NOT NULL,
-  `Situacao` BIT(1) NULL,
-  `Enderecos_id_endereco` INT NOT NULL,
-  `Telefones_num_telefone` CHAR(9) NOT NULL,
-  `Telefones_ddd` CHAR(2) NOT NULL,
-  UNIQUE INDEX `Email_UNIQUE` (`Email` ASC) VISIBLE,
-  PRIMARY KEY (`CPF`),
+  `Telefones_num_telefone` VARCHAR(9) NOT NULL,
+  PRIMARY KEY (`cpf`),
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE,
   INDEX `fk_Medicos_Enderecos1_idx` (`Enderecos_id_endereco` ASC) VISIBLE,
-  INDEX `fk_Medicos_Telefones1_idx` (`Telefones_num_telefone` ASC, `Telefones_ddd` ASC) VISIBLE,
+  INDEX `fk_Medicos_Telefones1_idx` (`Telefones_ddd` ASC, `Telefones_num_telefone` ASC) VISIBLE,
   CONSTRAINT `fk_Medicos_Enderecos1`
     FOREIGN KEY (`Enderecos_id_endereco`)
-    REFERENCES `db_SaudeMenos`.`Enderecos` (`id_endereco`)
+    REFERENCES `Saude_menos`.`Enderecos` (`id_endereco`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Medicos_Telefones1`
-    FOREIGN KEY (`Telefones_num_telefone` , `Telefones_ddd`)
-    REFERENCES `db_SaudeMenos`.`Telefones` (`num_telefone` , `ddd`)
+    FOREIGN KEY (`Telefones_ddd` , `Telefones_num_telefone`)
+    REFERENCES `Saude_menos`.`Telefones` (`ddd` , `num_telefone`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `db_SaudeMenos`.`Diagnosticos`
+-- Table `Saude_menos`.`Diagnosticos`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db_SaudeMenos`.`Diagnosticos` (
-  `id_Diagnostico` INT NOT NULL AUTO_INCREMENT,
-  `Paciente_CPF` VARCHAR(45) NOT NULL,
-  `CID` VARCHAR(45) NOT NULL,
-  `Nome_patologia` VARCHAR(45) NULL,
-  `Medicos_CPF` VARCHAR(45) NOT NULL,
+CREATE TABLE IF NOT EXISTS `Saude_menos`.`Diagnosticos` (
+  `id_diagnostico` INT NOT NULL AUTO_INCREMENT,
+  `nome_patologia` VARCHAR(45) NULL,
+  `cid_sigla` CHAR(1) NOT NULL,
+  `cid_cod` CHAR(3) NOT NULL,
+  `Medicos_cpf` CHAR(11) NOT NULL,
   `Pacientes_num_prontuario` INT NOT NULL,
-  PRIMARY KEY (`id_Diagnostico`),
-  INDEX `fk_Diagnosticos_Medicos1_idx` (`Medicos_CPF` ASC) VISIBLE,
+  PRIMARY KEY (`id_diagnostico`, `Pacientes_num_prontuario`),
+  INDEX `fk_Diagnosticos_Medicos1_idx` (`Medicos_cpf` ASC) VISIBLE,
   INDEX `fk_Diagnosticos_Pacientes1_idx` (`Pacientes_num_prontuario` ASC) VISIBLE,
   CONSTRAINT `fk_Diagnosticos_Medicos1`
-    FOREIGN KEY (`Medicos_CPF`)
-    REFERENCES `db_SaudeMenos`.`Medicos` (`CPF`)
+    FOREIGN KEY (`Medicos_cpf`)
+    REFERENCES `Saude_menos`.`Medicos` (`cpf`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Diagnosticos_Pacientes1`
     FOREIGN KEY (`Pacientes_num_prontuario`)
-    REFERENCES `db_SaudeMenos`.`Pacientes` (`num_prontuario`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
--- -----------------------------------------------------
--- Table `db_SaudeMenos`.`SolicitacoesExames`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db_SaudeMenos`.`SolicitacoesExames` (
-  `Laboratorios_CNES` CHAR(7) NOT NULL,
-  `Hospitais_CNES` VARCHAR(7) NOT NULL,
-  PRIMARY KEY (`Laboratorios_CNES`, `Hospitais_CNES`),
-  INDEX `fk_Laboratorios_has_Hospitais_Hospitais1_idx` (`Hospitais_CNES` ASC) VISIBLE,
-  INDEX `fk_Laboratorios_has_Hospitais_Laboratorios1_idx` (`Laboratorios_CNES` ASC) VISIBLE,
-  CONSTRAINT `fk_Laboratorios_has_Hospitais_Laboratorios1`
-    FOREIGN KEY (`Laboratorios_CNES`)
-    REFERENCES `db_SaudeMenos`.`Laboratorios` (`CNES`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Laboratorios_has_Hospitais_Hospitais1`
-    FOREIGN KEY (`Hospitais_CNES`)
-    REFERENCES `db_SaudeMenos`.`Hospitais` (`CNES`)
+    REFERENCES `Saude_menos`.`Pacientes` (`num_prontuario`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `db_SaudeMenos`.`Consultas`
+-- Table `Saude_menos`.`Consultas`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db_SaudeMenos`.`Consultas` (
-  `Medicos_CPF` VARCHAR(45) NOT NULL,
+CREATE TABLE IF NOT EXISTS `Saude_menos`.`Consultas` (
+  `data_consulta` DATETIME NOT NULL,
+  `data_agendada` DATETIME NOT NULL,
+  `Medicos_cpf` CHAR(11) NOT NULL,
   `Pacientes_num_prontuario` INT NOT NULL,
-  `lembradecriarosatributos` VARCHAR(45) NULL,
-  PRIMARY KEY (`Medicos_CPF`, `Pacientes_num_prontuario`),
+  PRIMARY KEY (`data_agendada`, `Medicos_cpf`, `Pacientes_num_prontuario`),
+  INDEX `fk_Consultas_Medicos1_idx` (`Medicos_cpf` ASC) VISIBLE,
   INDEX `fk_Consultas_Pacientes1_idx` (`Pacientes_num_prontuario` ASC) VISIBLE,
   CONSTRAINT `fk_Consultas_Medicos1`
-    FOREIGN KEY (`Medicos_CPF`)
-    REFERENCES `db_SaudeMenos`.`Medicos` (`CPF`)
+    FOREIGN KEY (`Medicos_cpf`)
+    REFERENCES `Saude_menos`.`Medicos` (`cpf`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Consultas_Pacientes1`
     FOREIGN KEY (`Pacientes_num_prontuario`)
-    REFERENCES `db_SaudeMenos`.`Pacientes` (`num_prontuario`)
+    REFERENCES `Saude_menos`.`Pacientes` (`num_prontuario`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
--- ERRO
+
 -- -----------------------------------------------------
--- Table `db_SaudeMenos`.`Solicitacoes`
+-- Table `Saude_menos`.`Pessoal_de_apoio`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db_SaudeMenos`.`Solicitacoes` (
-  `Hospitais_CNES` VARCHAR(7) NOT NULL,
-  `Laboratorios_CNES` CHAR(7) NOT NULL,
-  `id_exame` INT NOT NULL AUTO_INCREMENT,
-  `data_solicitacao` DATETIME NOT NULL,
-  PRIMARY KEY (`Hospitais_CNES`, `Laboratorios_CNES`, `id_exame`),
-  INDEX `fk_Solicitacoes_Hospitais1_idx` (`Hospitais_CNES` ASC) VISIBLE,
-  INDEX `fk_Solicitacoes_Laboratorios1_idx` (`Laboratorios_CNES` ASC) VISIBLE,
-  CONSTRAINT `fk_Solicitacoes_Hospitais1`
-    FOREIGN KEY (`Hospitais_CNES`)
-    REFERENCES `db_SaudeMenos`.`Hospitais` (`CNES`)
+CREATE TABLE IF NOT EXISTS `Saude_menos`.`Pessoal_de_apoio` (
+  `cpf` CHAR(11) NOT NULL,
+  `matricula` INT NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(90) NOT NULL,
+  `nome_social` VARCHAR(90) NULL DEFAULT '',
+  `sexo` CHAR(1) NOT NULL,
+  `email` VARCHAR(45) NULL,
+  `salario` DECIMAL(10,2) NOT NULL,
+  `Ambulatorios_id_ambulatorios` INT NOT NULL,
+  `Ambulatorios_Hospitais_cnes` VARCHAR(7) NOT NULL,
+  `Enderecos_id_endereco` INT NOT NULL,
+  `Telefones_ddd` CHAR(2) NOT NULL,
+  `Telefones_num_telefone` VARCHAR(9) NOT NULL,
+  PRIMARY KEY (`cpf`),
+  UNIQUE INDEX `matricula_UNIQUE` (`matricula` ASC) VISIBLE,
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE,
+  INDEX `fk_Pessoal_de_apoio_Ambulatorios1_idx` (`Ambulatorios_id_ambulatorios` ASC, `Ambulatorios_Hospitais_cnes` ASC) VISIBLE,
+  INDEX `fk_Pessoal_de_apoio_Enderecos1_idx` (`Enderecos_id_endereco` ASC) VISIBLE,
+  INDEX `fk_Pessoal_de_apoio_Telefones1_idx` (`Telefones_ddd` ASC, `Telefones_num_telefone` ASC) VISIBLE,
+  CONSTRAINT `fk_Pessoal_de_apoio_Ambulatorios1`
+    FOREIGN KEY (`Ambulatorios_id_ambulatorios` , `Ambulatorios_Hospitais_cnes`)
+    REFERENCES `Saude_menos`.`Ambulatorios` (`id_ambulatorios` , `Hospitais_cnes`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Solicitacoes_Laboratorios1`
-    FOREIGN KEY (`Laboratorios_CNES`)
-    REFERENCES `db_SaudeMenos`.`Laboratorios` (`CNES`)
+  CONSTRAINT `fk_Pessoal_de_apoio_Enderecos1`
+    FOREIGN KEY (`Enderecos_id_endereco`)
+    REFERENCES `Saude_menos`.`Enderecos` (`id_endereco`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Pessoal_de_apoio_Telefones1`
+    FOREIGN KEY (`Telefones_ddd` , `Telefones_num_telefone`)
+    REFERENCES `Saude_menos`.`Telefones` (`ddd` , `num_telefone`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Data for table `db_SaudeMenos`.`Laboratorios`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `db_SaudeMenos`;
-INSERT INTO `db_SaudeMenos`.`Laboratorios` (`CNES`, `id_laboratorio`, `nome_laboratorio`) VALUES ('1234567', \'\', 'Alberto Cidrim');
-INSERT INTO `db_SaudeMenos`.`Laboratorios` (`CNES`, `id_laboratorio`, `nome_laboratorio`) VALUES ('1234566', \'\', 'Testando');
-INSERT INTO `db_SaudeMenos`.`Laboratorios` (`CNES`, `id_laboratorio`, `nome_laboratorio`) VALUES ('1324657', \'\', 'Vitória Abestalhada');
-INSERT INTO `db_SaudeMenos`.`Laboratorios` (`CNES`, `id_laboratorio`, `nome_laboratorio`) VALUES ('3214565', \'\', 'Quezia mandachuva');
-
-COMMIT;
-
-
--- -----------------------------------------------------
--- Data for table `db_SaudeMenos`.`Solicitacoes`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `db_SaudeMenos`;
-INSERT INTO `db_SaudeMenos`.`Solicitacoes` (`Hospitais_CNES`, `Laboratorios_CNES`, `id_exame`, `data_solicitacao`) VALUES (DEFAULT, DEFAULT, \'\', DEFAULT);
-
-COMMIT;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
