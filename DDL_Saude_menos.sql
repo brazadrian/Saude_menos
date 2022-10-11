@@ -153,7 +153,7 @@ CREATE TABLE IF NOT EXISTS `Saude_menos`.`Exames` (
   `data_solicitacao` DATE NOT NULL,
   `data_realizacao` DATETIME NULL,
   `grupo_exame` CHAR(1) NOT NULL,
-  `cod_exame` CHAR(7) NOT NULL,
+  `cod_exame` CHAR(8) NOT NULL,
   `nome_exame` VARCHAR(90) NULL,
   `Laboratorios_cnes` VARCHAR(7) NOT NULL,
   `Pacientes_num_prontuario` INT NOT NULL,
@@ -295,6 +295,12 @@ CREATE TABLE IF NOT EXISTS `Saude_menos`.`Pessoal_de_apoio` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+
+-- Alterações
+
+-- Alterar char(11) para char(8) no CEP de enderecos
+ALTER TABLE `saude_menos`.`enderecos`
+MODIFY cep CHAR(8);
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
