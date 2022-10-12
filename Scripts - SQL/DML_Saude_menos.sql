@@ -1,8 +1,4 @@
 -- -----------------------------------------------------
--- Consultas no Schema Saude_menos
--- -----------------------------------------------------
-
--- -----------------------------------------------------
 -- Inserindo dados na tabela Endereços
 -- -----------------------------------------------------
 INSERT INTO `Saude_menos`.`Enderecos`
@@ -30,27 +26,34 @@ VALUES (1, "26489116", "Rua Dona Dalva", 49, "Nova Descoberta"),
 (21, "50936274", "Rua da Hora", 45, "Espinheiro"),
 (22, "50043876", "Rua do Fogo", 13, "Santo Antônio"),
 (23, "98345265", "Rua das Flores", 13, "Santo Antônio"),
-(24, "98345265", "Rua Ministro Gilberto Gil", 13, "Iputinga");
+(24, "98345265", "Rua Ministro Gilberto Gil", 13, "Iputinga"),
+(25, "50043876", "Rua do Fogo", 35, "Santo Antônio"),
+(26, "98345265", "Rua das Flores", 65, "Santo Antônio"),
+(27, "98345265", "Rua Ministro Gilberto Gil", 2, "Iputinga"),
+(28, "26489116", "Rua Dona Dalva", 23, "Nova Descoberta"), 
+(29, "26489416", "Rua Tamarindo", 18, "Iputinga"),
+(30, "56289176", "Rua Gatinho", 13, "Boa Vista"),
+(31, "98643586", "Rua da Cadeia Velha", 27, "Recife"),
+(32, "14256486", "Rua do Aragão", 13, "Boa Vista"),
+(33, "50030170", "Rua  do Bom Jesus", 31, "Recife"),
+(34, "23654321", "Rua do Crespo", 123, "Santo Antônio"),
+(35, "98547623", "Rua do Imperador", 157, "Santo Antônio"), 
+(36, "50936274", "Rua da Hora", 171, "Espinheiro"),
+(37, "50043876", "Rua do Fogo", 192, "Santo Antônio"),
+(38, "98345265", "Rua das Flores", 129, "Santo Antônio"),
+(39, "98345265", "Rua Ministro Gilberto Gil", 1377, "Iputinga"),
+(40, "50000000", "Rua Robeyoncé Lima", 5000, "Santo Amaro"),
+(41,"88911-372", "Rua Caetano da Silva", 44, "Morro dos Conventos"),
+(42,"89564280", "Rua Lindóia", 12, "Sesi"),
+(43,"64046455", "Avenida Governador Gayoso e Almendra", 10, "São João"),
+(44,"58400074", "Rua Bartolomeu de Gusmão", 77, "Centro"),
+(45,"81590603", "Rua Edson Luiz Dill", 17, "Uberaba"),
+(46,"49503135", "Rua Manoel Messias dos Santos", 45, "Serrano"),
+(47,"57044050", "Rua Capitão Correia", 130, "São Jorge"),
+(48,"68908112", "Avenida Padre José de Anchieta", 27, "Jesus de Nazaré"),
+(49,"64745265", "Rua Jutaí", 14, "Floresta Sul"),
+(50,"79083410", "Rua dos Mascates", 65, "Jardim Aero Rancho");
 
-INSERT INTO `Saude_menos`.`Enderecos`
-(`cep`, `rua`, `numero`, `bairro`) 
-VALUES
-("50043876", "Rua do Fogo", 35, "Santo Antônio"),
-("98345265", "Rua das Flores", 65, "Santo Antônio"),
-("98345265", "Rua Ministro Gilberto Gil", 2, "Iputinga"),
-("26489116", "Rua Dona Dalva", 23, "Nova Descoberta"), 
-("26489416", "Rua Tamarindo", 18, "Iputinga"),
-("56289176", "Rua Gatinho", 13, "Boa Vista"),
-("98643586", "Rua da Cadeia Velha", 27, "Recife"),
-("14256486", "Rua do Aragão", 13, "Boa Vista"),
-("50030170", "Rua  do Bom Jesus", 31, "Recife"),
-("23654321", "Rua do Crespo", 123, "Santo Antônio"),
-("98547623", "Rua do Imperador", 157, "Santo Antônio"), 
-("50936274", "Rua da Hora", 171, "Espinheiro"),
-("50043876", "Rua do Fogo", 192, "Santo Antônio"),
-("98345265", "Rua das Flores", 129, "Santo Antônio"),
-("98345265", "Rua Ministro Gilberto Gil", 1377, "Iputinga"),
-("50000000", "Rua Robeyoncé Lima", 5000, "Santo Amaro");
 
 -- -----------------------------------------------------
 -- Inserindo dados na tabela Telefones
@@ -87,7 +90,17 @@ values (81, 982341235),
 (81, 991579762),
 (81, 968710433),
 (81, 989137456),
-(81, 996374671);
+(81, 996374671),
+(62, 986545130),
+(75, 985452624),
+(12, 967787966),
+(97, 979655752),
+(42, 975348420),
+(85, 995228431),
+(79, 971414208),
+(69, 981230964),
+(84, 979156703),
+(83, 971867561);
 
 -- -----------------------------------------------------
 -- Inserindo dados na tabela Hospitais
@@ -216,24 +229,22 @@ VALUES
 (10, '2022-04-18 16:32:00', ' 2022-07-0 07:00:00', 'A', 87654321, 'Ginecologia', 2652181, 8);
 
 -- -----------------------------------------------------
--- Inserindo dados na tabela Médicos
+-- Inserindo dados na tabela Médicos (FALTA AJUSTAR)
 -- -----------------------------------------------------
+
 INSERT INTO `Saude_menos`.`Medicos` 
-(`cpf`, `crm`, `nome`, `nome_social`, `rqe`, `especialidade`, `sexo`, `email`, `salario`, `situacao`,  `Hospitais_cnes`, `Enderecos_id_endereco`, `Telefones_num_telefone`, `Telefones_ddd`)
+(`cpf`, `crm`, `nome`, `nome_social`, `rqe`, `especialidade`, `sexo`, `email`, `salario`, `situacao`, `Enderecos_id_endereco`, `Telefones_ddd`, `Telefones_num_telefone`, `Hospitais_cnes`) 
 VALUES 
-('46041385409', '1122PE', 'Rosinalda Quintanilha de Lima', NULL, '14762', 'Pediatria', 'F', 'rosinalda.lima@gmail.com', 3550.00, 1, 7648913, 31, 986545130, 62);
-
-
-
-
-
-
-
-INSERT INTO `Saude_menos`.`Medicos`
-(`crm`, `cpf`, `nome`, `nome_social`, `rqe`, `especialidade`, `sexo`, `email`, `salario`, `situacao`, `Enderecos_id_endereco`, `Telefones_ddd`, `Telefones_num_telefone`)
-VALUES
-('1122PE', "46041385409", "Rosinalx'da Quintanilha de Lima", NULL, '14762', 'Pediatria', 'F', 'rosinalda.lima@gmail.com', 3550.00, 1, 7648913, 31, 986545130, 62);
-
+('46041385409', '1122PE', 'Rosinalda Quintanilha de Lima', NULL, '1555', 'Dermatologista', 'F', 'rosinalda.lima@hop.com', 5675.00, '1', 31, '62', '986545130', '7648913'), 
+('62566822549', '4576PE', 'Margareth Portugal da Conceição', NULL, '3227', 'Psiquiatra', 'F', 'margareth.conceicao@gmail.com', 7500.00, '0', 42, 83, 971867561, 7648913), 
+('65485147852', '6766BA', 'Pablo Carminatti Andrade', NULL, 'NULL', 'Residente', 'M', 'pablo.andrade@hoc.com', 2550, '1', 43, 75, 985452624, 7623463), 
+('25752804272', '2322PE', 'Maria Alice Albuquerque Anjos', NULL, '5465', 'Oftalmologista', 'F', 'maria.anjos@sus.com', 3550, '1', 44, 12, 967787966, 7828463), 
+('61353868915', '4501PE', 'Thainá Salomão Sarmanto', NULL, '7898', 'Geriatra', 'F', 'thaina.sarmato@sus.com', 8000, '1', 46, 42, 975348420, 4389135), 
+('78433203347', '3311PE', 'Arthur Louzano Robadey', NULL, '3245', 'Cardiologista', 'M', 'arthur.robadey@sus.com', 8900, '1', 47, 85, 995228431, 5647384), 
+('18275217598', '5454BA', 'Luana Reis Muniz', NULL, '9897', 'Ginecologista', 'F', 'luana.muniz@sus.com', 9500, '1', 48, 79, 971414208, 7648913), 
+('17756873254', '2188PB', 'Rosali Prucho Heizelmann', NULL, '9897', 'Ginecologista', 'F', 'rosali.heizelmann@sus.com', 8500, '1', 49, 69, 981230964, 7623463), 
+('43984534400', '2770RJ', 'Sergio Gomes Alentejo', NULL, '1003', 'Clínico Geral', 'M', 'sergio.alentejo@sus.com', 5600, '1', 50, 84, 979156703, 7828463),
+('60882111485', '3110PE', 'Otavio Garcia', NULL, '1003', 'Clínico Geral', 'M', 'otavio.garcia@sus.com', 5505, '1', 51, 81, 987463732, 7828463);
 
 
 -- -----------------------------------------------------
@@ -260,49 +271,6 @@ VALUES
 (06315924413, 8, "Gabrielle Barbosa",  NULL, 'F', "gabriellefernandesbarbosa@dayrep.com", 1800.00, 8, 7623463, 38, 81, 981075122),
 (18009420450, 9, "Dolores Payne",  NULL, 'F', "doloresdpayne@rhyta.com", 1800.00, 9, 7648913, 39, 75, 981013100),
 (12000422455, 10, "James Bravo",  NULL, 'M', "jamesbbravo@jourrapide.com", 1800.00, 10, 4389135, 40, 77, 981020166);
-
-
-
-
-
-
--- -----------------------------------------------------
--- Inserindo dados na tabela Pacientes
--- -----------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
