@@ -317,7 +317,7 @@ SET `nome` = 'Gabriela Da Silva Sauro', `email` = 'gabidugerah@gmail.com'
 WHERE num_prontuario = 1;
 
 UPDATE `Saude_menos`.`Enderecos`
-SET `cep` = "2648-9116"
+SET `cep` = "26489116"
 WHERE `id_endereco` = '17';
 
 UPDATE `Saude_menos`.`Exames`
@@ -332,9 +332,13 @@ UPDATE `Saude_menos`.`Pessoal_de_apoio`
 SET `nome_social` = 'Silvio Da Santos Sauro'
 WHERE `cpf` = '32015787451';
 
+/*
+Possível melhoria:
+
 UPDATE `Saude_menos`.`Pessoal_de_apoio`
 SET `Telefones_ddd` = '81', `Telefones_num_telefone` =  '988563267'
 WHERE `cpf` = '17019437559';
+*/
 
 UPDATE `Saude_menos`.`Pessoal_de_apoio`
 SET `email` = 'robertinho123@hotmail.com'
@@ -368,19 +372,13 @@ WHERE `id_solicitacao` = 1;
 
 
 UPDATE `Saude_menos`.`Hospitais`
-SET `Telefones_ddd` = '81', 'Telefones_num_telefone' = '988648597'
+SET `Telefones_ddd` = '81', `Telefones_num_telefone` = '988648597'
 WHERE `cnes` = '7623463';
 
 
 UPDATE `Saude_menos`.`Medicos`
-SET `Telefones_ddd` = '81', 'Telefones_num_telefone' = '981264597'
+SET `Telefones_ddd` = '81', `Telefones_num_telefone` = '981264597'
 WHERE `cpf` = '61353868915';
-
-
-UPDATE `Saude_menos`.`Pacientes`
-SET `Telefone_ddd` = '81', 'Telefone_num_telefone' = '987643594'
-WHERE `cpf` = '64994984168';
-
 
 UPDATE `Saude_menos`.`Solicitacoes`
 SET `Laboratorios_cnes` = '8435671'
@@ -390,6 +388,7 @@ UPDATE `Saude_menos`.`Consultas`
 SET `Medicos_cpf` = '46041385409'
 WHERE `Pacientes_num_prontuario` = '3';
 
+/*4 updates - maiara
+não pode usar chave estrangeira*/
 
-UPDATE `Saude_menos`.`Consultas`
-SET `Medicos_cpf` = '62566822549';
+

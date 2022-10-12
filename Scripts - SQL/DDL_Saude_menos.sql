@@ -314,33 +314,33 @@ ALTER TABLE `Saude_menos`.`Enderecos`
 	MODIFY COLUMN `cep` CHAR(8) NOT NULL;
 
 -- -----------------------------------------------------
--- Alterar XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+-- Adicionar coluna cidade depois de bairro
 -- -----------------------------------------------------    
 ALTER TABLE `Saude_menos`.`Enderecos`
 	ADD COLUMN `cidade` CHAR(45) NULL DEFAULT 'Recife'
 		AFTER `bairro`;
 
 -- -----------------------------------------------------
--- Alterar XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+-- Adicionar coluna complemento depois numero
 -- -----------------------------------------------------  
 ALTER TABLE `Saude_menos`.`Enderecos`
 	ADD COLUMN `complemento` VARCHAR(30)
     AFTER `numero`;
 
 -- -----------------------------------------------------
--- Alterar XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+-- Modificar coluna cod_exame para char(8)
 -- -----------------------------------------------------  
 ALTER TABLE `Saude_menos`.`Exames`
 	MODIFY COLUMN `cod_exame` CHAR(8);
 
 -- -----------------------------------------------------
--- Alterar XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+-- Modificar coluna data_consulta para datetime
 -- -----------------------------------------------------  
 ALTER TABLE `Saude_menos`.`Consultas`
 	MODIFY COLUMN `data_consulta` DATETIME;
 
 -- -----------------------------------------------------
--- Alterar XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+-- Adicionar coluna data_nascimento  depois de nome_social
 -- -----------------------------------------------------      
 ALTER TABLE `Saude_menos`.`Pacientes`
 	ADD COLUMN `data_nascimento` DATE AFTER `nome_social`;
