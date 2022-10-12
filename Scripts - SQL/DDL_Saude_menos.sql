@@ -332,6 +332,11 @@ ALTER TABLE `Saude_menos`.`Exames`
 ALTER TABLE `Saude_menos`.`Consultas`
 	MODIFY COLUMN `data_consulta` DATETIME;
 
+-- -----------------------------------------------------
+-- Alterar XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+-- -----------------------------------------------------      
+ALTER TABLE `Saude_menos`.`Pacientes`
+	ADD COLUMN `data_nascimento` DATE AFTER `nome_social`;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
