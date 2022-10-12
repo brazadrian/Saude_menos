@@ -300,7 +300,6 @@ VALUES
 (18009420450, 9, "Dolores Payne",  NULL, 'F', "doloresdpayne@rhyta.com", 1800.00, 9, 7648913, 39, 75, 981013100),
 (12000422455, 10, "James Bravo",  NULL, 'M', "jamesbbravo@jourrapide.com", 1800.00, 10, 4389135, 40, 77, 981020166);
 
-
 -- -----------------------------------------------------
 -- Deetando dados nas tabelas
 -- -----------------------------------------------------
@@ -313,66 +312,54 @@ DELETE FROM `Saude_menos`.`Medicos` WHERE `cpf` = '46041385409';
 -- -----------------------------------------------------
 -- Atualizando dados nas tabelas
 -- -----------------------------------------------------
-
 UPDATE `Saude_menos`.`Pacientes`
-SET `nome` = `Gabriela Da Silva Sauro`, `email` = `gabidugerah@gmail.com`
+SET `nome` = 'Gabriela Da Silva Sauro', `email` = 'gabidugerah@gmail.com'
 WHERE num_prontuario = 1;
 
-
-UPDATE `Saude_menos`.`Endereço`
+UPDATE `Saude_menos`.`Enderecos`
 SET `cep` = "2648-9116"
-WHERE `id_endereco` = `17`;
-
+WHERE `id_endereco` = '17';
 
 UPDATE `Saude_menos`.`Exames`
 SET `data_realizacao` = '2022-10-12 17:05:47'
 WHERE `id_exame` = 1;
 
-
 UPDATE `Saude_menos`.`Exames`
-SET `data_realizacao` = `2022-10-03 12:25:17`
+SET `data_realizacao` = '2022-10-03 12:25:17'
 WHERE `id_exame` = 2;
 
+UPDATE `Saude_menos`.`Pessoal_de_apoio`
+SET `nome_social` = 'Silvio Da Santos Sauro'
+WHERE `cpf` = '32015787451';
 
 UPDATE `Saude_menos`.`Pessoal_de_apoio`
-SET `nome_social` = `Silvio Da Santos Sauro`
-WHERE `cpf` = `32015787451`;
-
-
-UPDATE `Saude_menos`.`Pessoal_de_apoio`
-SET `Telefones_ddd` = `81`, `Telefones_num_telefone` =  `988563267`
-WHERE `cpf` = `17019437559`;
-
+SET `Telefones_ddd` = '81', `Telefones_num_telefone` =  '988563267'
+WHERE `cpf` = '17019437559';
 
 UPDATE `Saude_menos`.`Pessoal_de_apoio`
-SET `email` = `robertinho123@hotmail.com`
-WHERE `cpf` = `22015287453`;
-
+SET `email` = 'robertinho123@hotmail.com'
+WHERE `cpf` = '22015287453';
 
 UPDATE `Saude_menos`.`Pacientes`
-SET `nome_social` = `Joana`
-WHERE `cpf` = `41258458468`;
-
-
+SET `nome_social` = 'Joana Antônia Ferreira'
+WHERE `cpf` = '41258458468';
 
 UPDATE `Saude_menos`.`Pacientes`
-SET `nome` = `Gabriel Da Silva Sauro`, `sexo` = `M`
-WHERE `cpf` = `87956423154`;
-
-
-UPDATE `Saude_menos`.`Medicos`
-SET `email` = `drjuni0rt@yahoo.com`,
-WHERE `cpf` = `65485147852`;
-
+SET `nome` = 'Gabriel Da Silva Sauro', `sexo` = 'M'
+WHERE `cpf` = '87956423154';
 
 UPDATE `Saude_menos`.`Medicos`
-SET `email` = `draangela34@yahoo.com`,
-WHERE `cpf` = `25752804272`;
+SET `email` = 'drjuni0rt@yahoo.com'
+WHERE `cpf` = '65485147852';
+
+UPDATE `Saude_menos`.`Medicos`
+SET `email` = 'draangela34@yahoo.com'
+WHERE `cpf` = '25752804272';
 
 
 UPDATE `Saude_menos`.`Pessoal_de_apoio`
-SET `nome` = `Joana Meneses Santos`, `sexo` = `F`
-WHERE `cpf` = `87954631259`;
+SET `nome` = 'Joana Meneses Santos', `sexo` = 'F'
+WHERE `cpf` = '87954631259';
 
 
 UPDATE `Saude_menos`.`Solicitacoes`
@@ -381,26 +368,27 @@ WHERE `id_solicitacao` = 1;
 
 
 UPDATE `Saude_menos`.`Hospitais`
-SET `Telefones_ddd` = `81`, `Telefones_num_telefone` = `988648597`
-WHERE `cnes` = `7623463`;
+SET `Telefones_ddd` = '81', `Telefones_num_telefone` = '988648597'
+WHERE `cnes` = '7623463';
 
 
 UPDATE `Saude_menos`.`Medicos`
-SET `Telefones_ddd` = `81`, `Telefones_num_telefone` = `981264597`
-WHERE `cpf` = `61353868915`;
+SET `Telefones_ddd` = '81', `Telefones_num_telefone` = '981264597'
+WHERE `cpf` = '61353868915';
 
+/* CONTINUAR ESSE AQUI */
 
 UPDATE `Saude_menos`.`Pacientes`
-SET `Telefone_ddd` = `81`, `Telefone_num_telefone` = `987643594`
-WHERE `cpf` = `64994984168`;
+SET `Telefone_ddd` = '81', `Telefone_num_telefone` = '987643594'
+WHERE `cpf` = '64994984168';
 
 
 UPDATE `Saude_menos`.`Solicitacoes`
-SET `Laboratorios_cnes` = `8435671`
-WHERE `id_solicitacao` = `1`;
+SET `Laboratorios_cnes` = '8435671'
+WHERE `id_solicitacao` = 1;
 
 UPDATE `Saude_menos`.`Consultas`
-SET `Medicos_cpf` = `46041385409`
+SET `Medicos_cpf` = '46041385409'
 WHERE `Pacientes_num_prontuario` = '3';
 
 
