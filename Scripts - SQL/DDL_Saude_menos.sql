@@ -316,6 +316,13 @@ ALTER TABLE `Saude_menos`.`Enderecos`
 -- -----------------------------------------------------
 -- Alterar XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 -- -----------------------------------------------------  
+ALTER TABLE `Saude_menos`.`Enderecos`
+	ADD COLUMN `complemento` VARCHAR(30)
+    AFTER `numero`;
+
+-- -----------------------------------------------------
+-- Alterar XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+-- -----------------------------------------------------  
 ALTER TABLE `Saude_menos`.`Exames`
 	MODIFY COLUMN `cod_exame` CHAR(8);
 
@@ -324,11 +331,6 @@ ALTER TABLE `Saude_menos`.`Exames`
 -- -----------------------------------------------------  
 ALTER TABLE `Saude_menos`.`Consultas`
 	MODIFY COLUMN `data_consulta` DATETIME;
-
--- -----------------------------------------------------
--- Alterar XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
--- -----------------------------------------------------  
-ALTER TABLE
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
