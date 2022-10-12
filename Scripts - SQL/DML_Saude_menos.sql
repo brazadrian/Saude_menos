@@ -368,18 +368,17 @@ WHERE `id_solicitacao` = 1;
 
 
 UPDATE `Saude_menos`.`Hospitais`
-SET `Telefones_ddd` = '81', `Telefones_num_telefone` = '988648597'
+SET `Telefones_ddd` = '81', 'Telefones_num_telefone' = '988648597'
 WHERE `cnes` = '7623463';
 
 
 UPDATE `Saude_menos`.`Medicos`
-SET `Telefones_ddd` = '81', `Telefones_num_telefone` = '981264597'
+SET `Telefones_ddd` = '81', 'Telefones_num_telefone' = '981264597'
 WHERE `cpf` = '61353868915';
 
-/* CONTINUAR ESSE AQUI */
 
 UPDATE `Saude_menos`.`Pacientes`
-SET `Telefone_ddd` = '81', `Telefone_num_telefone` = '987643594'
+SET `Telefone_ddd` = '81', 'Telefone_num_telefone' = '987643594'
 WHERE `cpf` = '64994984168';
 
 
