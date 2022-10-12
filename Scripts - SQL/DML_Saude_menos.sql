@@ -274,7 +274,109 @@ VALUES
 
 
 
+-- -----------------------------------------------------
+-- Deetando dados nas tabelas
+-- -----------------------------------------------------
+
+DELETE FROM `Saude_menos`.`Medicos` WHERE `cpf` = `62566822549`;
+
+DELETE FROM `Saude_menos`.`Medicos` WHERE `cpf` = `460.413.854-09`;
 
 
 
+-- -----------------------------------------------------
+-- atualizando dados nas tabelas
+-- -----------------------------------------------------
 
+UPDATE `Saude_menos`.`Pacientes`
+SET `nome` = `Gabriela Da Silva Sauro`, `email` = `gabidugerah@gmail.com`
+WHERE num_prontuario = 1;
+
+
+UPDATE `Saude_menos`.`Endereço`
+SET `cep` = "2648-9116"
+WHERE `id_endereco` = `17`;
+
+
+UPDATE `Saude_menos`.`Exames`
+SET `data_realizacao` = '2022-10-12 17:05:47'
+WHERE `id_exame` = 1;
+
+
+UPDATE `Saude_menos`.`Exames`
+SET `data_realizacao` = `2022-10-03 12:25:17`
+WHERE `id_exame` = 2;
+
+
+UPDATE `Saude_menos`.`Pessoal_de_apoio`
+SET `nome_social` = `Silvio Da Santos Sauro`
+WHERE `cpf` = `32015787451`;
+
+
+UPDATE `Saude_menos`.`Pessoal_de_apoio`
+SET `Telefones_ddd` = `81`, `Telefones_num_telefone` =  `988563267`
+WHERE `cpf` = `17019437559`;
+
+
+UPDATE `Saude_menos`.`Pessoal_de_apoio`
+SET `email` = `robertinho123@hotmail.com`
+WHERE `cpf` = `22015287453`;
+
+
+UPDATE `Saude_menos`.`Pacientes`
+SET `nome_social` = `Joana`
+WHERE `cpf` = `41258458468`;
+
+
+
+UPDATE `Saude_menos`.`Pacientes`
+SET `nome` = `Gabriel Da Silva Sauro`, `sexo` = `M`
+WHERE `cpf` = `87956423154`;
+
+
+UPDATE `Saude_menos`.`Medicos`
+SET `email` = `drjuni0rt@yahoo.com`,
+WHERE `cpf` = `65485147852`;
+
+
+UPDATE `Saude_menos`.`Medicos`
+SET `email` = `draangela34@yahoo.com`,
+WHERE `cpf` = `25752804272`;
+
+
+UPDATE `Saude_menos`.`Pessoal_de_apoio`
+SET `nome` = `Joana Meneses Santos`, `sexo` = `F`
+WHERE `cpf` = `87954631259`;
+
+
+UPDATE `Saude_menos`.`Solicitacoes`
+SET `data` = '2022-09-07 16:25:17'
+WHERE `id_solicitacao` = 1;
+
+
+UPDATE `Saude_menos`.`Hospitais`
+SET `Telefones_ddd` = `81`, `Telefones_num_telefone` = `988648597`
+WHERE `cnes` = `7623463`;
+
+
+UPDATE `Saude_menos`.`Medicos`
+SET `Telefones_ddd` = `81`, `Telefones_num_telefone` = `981264597`
+WHERE `cpf` = `61353868915`;
+
+
+UPDATE `Saude_menos`.`Pacientes`
+SET `Telefone_ddd` = `81`, `Telefone_num_telefone` = `987643594`
+WHERE `cpf` = `64994984168`;
+
+
+UPDATE `Saude_menos`.`Solicitacoes`
+SET `Laboratorios_cnes` = `8435671`
+WHERE `id_solicitacao` = `1`;
+
+UPDATE `Saude_menos`.`Consultas`
+SET `Medicos_cpf` = `46041385409`
+WHERE `Pacientes_num_prontuario` = '3';
+
+
+UPDATE `Saude_menos`.`Consultas`
+SET `Medicos_cpf` = '62566822549';
