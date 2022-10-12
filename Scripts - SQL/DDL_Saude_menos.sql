@@ -189,10 +189,12 @@ CREATE TABLE IF NOT EXISTS `Saude_menos`.`Medicos` (
   `Enderecos_id_endereco` INT NOT NULL,
   `Telefones_ddd` CHAR(2) NOT NULL,
   `Telefones_num_telefone` VARCHAR(9) NOT NULL,
-  PRIMARY KEY (`cpf`),
+  `Hospitais_cnes` VARCHAR(7) NOT NULL,
+  PRIMARY KEY (`cpf`, `Hospitais_cnes`),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE,
   INDEX `fk_Medicos_Enderecos1_idx` (`Enderecos_id_endereco` ASC) VISIBLE,
   INDEX `fk_Medicos_Telefones1_idx` (`Telefones_ddd` ASC, `Telefones_num_telefone` ASC) VISIBLE,
+  INDEX `fk_Medicos_Hospitais1_idx` (`Hospitais_cnes` ASC) VISIBLE,
   CONSTRAINT `fk_Medicos_Enderecos1`
     FOREIGN KEY (`Enderecos_id_endereco`)
     REFERENCES `Saude_menos`.`Enderecos` (`id_endereco`)
@@ -201,6 +203,11 @@ CREATE TABLE IF NOT EXISTS `Saude_menos`.`Medicos` (
   CONSTRAINT `fk_Medicos_Telefones1`
     FOREIGN KEY (`Telefones_ddd` , `Telefones_num_telefone`)
     REFERENCES `Saude_menos`.`Telefones` (`ddd` , `num_telefone`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Medicos_Hospitais1`
+    FOREIGN KEY (`Hospitais_cnes`)
+    REFERENCES `Saude_menos`.`Hospitais` (`cnes`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
