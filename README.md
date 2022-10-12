@@ -24,7 +24,7 @@ Repositório para a criação de Banco de Dados ficcional relativo à rotinas de
     - [ ] Crie um script para criar todas as views (DDL) (no mínimo 10) dos principais relatórios do seu projeto.
     - [ ] Crie um script que irá executar as procedures e funções do seu banco de dados. Use o PLSQL, como colocado em sala de aula, e devem fazer no mínimo 10 procedures/funções;
 
-# O Mini-mundo escolhido foi o de Sistema de saúde
+# O Mini-mundo do Sistema de saúde
 **Hospitais** são formados por um ou mais **Ambulatórios** e cada um destes está em um único Hospital;
 
 **Médicos** clinicam em um único **Hospital**, cada um deles agregando vários Médicos;
