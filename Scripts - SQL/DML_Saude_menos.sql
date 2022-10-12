@@ -1,20 +1,21 @@
 -- INSERT, DELETE E UPDATE
 
-INSERT INTO `Saude_menos`.`Enderecos`
-(`cep`, `rua`, `numero`, `bairro`, `estado`) 
-values ("26489116", "Rua Dona Dalva", 49, "Nova Descoberta", "PE"), 
-("26489416", "Rua Tamarindo", 70, "Iputinga", "PE"),
-("56289176", "Rua Gatinho", 341, "Boa Vista", "PE"),
-("98643586", "Rua da Cadeia Velha", 54, "Recife", "PE"),
-("14256486", "Rua do Aragão", 65, "Boa Vista", "PE"),
-("50030170", "Rua  do Bom Jesus", 10, "Recife", "PE"),
-("23654321", "Rua do Crespo", 89, "Santo Antônio", "PE"),
-("98547623", "Rua do Imperador", 13, "Santo Antônio", "PE"), 
-("50936274", "Rua da Hora", 52, "Espinheiro", "PE"),
-("50043876", "Rua do Fogo", 14, "Santo Antônio", "PE"),
-("98345265", "Rua das Flores", 44, "Santo Antônio", "PE")
-("98345265", "Rua Ministro Gilberto Gil", 172, "Iputinga", "PE");
+INSERT INTO `Saude_menos`.`Enderecos` (`id_endereco`, `cep`, `rua`, `numero`, `bairro`, `estado`, `cidade`) VALUES (NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
+INSERT INTO `Saude_menos`.`Enderecos`
+(`id_endereco`, `cep`, `rua`, `numero`, `bairro`, `estado`) 
+values (1, "26489116", "Rua Dona Dalva", 49, "Nova Descoberta", "PE"), 
+(2, "26489416", "Rua Tamarindo", 70, "Iputinga", "PE"),
+(3, "56289176", "Rua Gatinho", 341, "Boa Vista", "PE"),
+(4, "98643586", "Rua da Cadeia Velha", 54, "Recife", "PE"),
+(5, "14256486", "Rua do Aragão", 65, "Boa Vista", "PE"),
+(6, "50030170", "Rua  do Bom Jesus", 10, "Recife", "PE"),
+(7, "23654321", "Rua do Crespo", 89, "Santo Antônio", "PE"),
+(8, "98547623", "Rua do Imperador", 13, "Santo Antônio", "PE"), 
+(9, "50936274", "Rua da Hora", 52, "Espinheiro", "PE"),
+(10, "50043876", "Rua do Fogo", 14, "Santo Antônio", "PE"),
+(11, "98345265", "Rua das Flores", 44, "Santo Antônio", "PE"),
+(12, "98345265", "Rua Ministro Gilberto Gil", 172, "Iputinga", "PE");
 
 INSERT INTO `Saude_menos`.`Telefones` 
 (`ddd`, `num_telefone`) 
@@ -56,6 +57,13 @@ values ("Cardiologia", "7648913"),
 ("Ginecologia", "7623463"),
 ("Psiquiatria", "7648913"),
 ("Endoscopia", "4389135");
+
+
+INSERT INTO `Saude_menos`.`Pacientes`
+	(`cpf`, `nome`, `nome_social`, `email`, `sexo`, `Enderecos_id_endereco`, `Telefones_ddd`, `Telefones_num_telefone`) 
+		VALUES
+			(),
+			(NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 INSERT INTO `Saude_menos`.`Pacientes` 
 (`cpf`,  `nome`, `nome_social`, `email`, `sexo`, `Enderecos_id_endereco`, `Telefones_ddd`, `Telefones_num_telefone`) 

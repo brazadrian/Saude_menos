@@ -7,8 +7,8 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema Saude_menos
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `Saude_menos` ;
-USE `Saude_menos` ;
+CREATE SCHEMA IF NOT EXISTS `Saude_menos`;
+USE `Saude_menos`;
 
 -- -----------------------------------------------------
 -- Table `Saude_menos`.`Enderecos`
@@ -299,8 +299,12 @@ ENGINE = InnoDB;
 -- Alterações
 
 -- Alterar char(11) para char(8) no CEP de enderecos
-ALTER TABLE `saude_menos`.`enderecos`
-MODIFY cep CHAR(8);
+ALTER TABLE `Saude_menos`.`Enderecos`
+	MODIFY COLUMN `cep` CHAR(8) NOT NULL;
+    
+ALTER TABLE `Saude_menos`.`Enderecos`
+	ADD COLUMN `cidade` CHAR(45)
+		AFTER `bairro`;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
