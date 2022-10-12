@@ -3,7 +3,8 @@
 -- -----------------------------------------------------
 INSERT INTO `Saude_menos`.`Enderecos`
 (`id_endereco`, `cep`, `rua`, `numero`, `bairro`) 
-VALUES (1, "26489116", "Rua Dona Dalva", 49, "Nova Descoberta"), 
+VALUES
+(1, "26489116", "Rua Dona Dalva", 49, "Nova Descoberta"), 
 (2, "26489416", "Rua Tamarindo", 70, "Iputinga"),
 (3, "56289176", "Rua Gatinho", 341, "Boa Vista"),
 (4, "98643586", "Rua da Cadeia Velha", 54, "Bairro do Recife"),
@@ -43,16 +44,16 @@ VALUES (1, "26489116", "Rua Dona Dalva", 49, "Nova Descoberta"),
 (38, "98345265", "Rua das Flores", 129, "Santo Antônio"),
 (39, "98345265", "Rua Ministro Gilberto Gil", 1377, "Iputinga"),
 (40, "50000000", "Rua Robeyoncé Lima", 5000, "Santo Amaro"),
-(41,"88911-372", "Rua Caetano da Silva", 44, "Morro dos Conventos"),
-(42,"89564280", "Rua Lindóia", 12, "Sesi"),
-(43,"64046455", "Avenida Governador Gayoso e Almendra", 10, "São João"),
-(44,"58400074", "Rua Bartolomeu de Gusmão", 77, "Centro"),
-(45,"81590603", "Rua Edson Luiz Dill", 17, "Uberaba"),
-(46,"49503135", "Rua Manoel Messias dos Santos", 45, "Serrano"),
-(47,"57044050", "Rua Capitão Correia", 130, "São Jorge"),
-(48,"68908112", "Avenida Padre José de Anchieta", 27, "Jesus de Nazaré"),
-(49,"64745265", "Rua Jutaí", 14, "Floresta Sul"),
-(50,"79083410", "Rua dos Mascates", 65, "Jardim Aero Rancho");
+(41, "88911372", "Rua Caetano da Silva", 44, "Morro dos Conventos"),
+(42, "89564280", "Rua Lindóia", 12, "Sesi"),
+(43, "64046455", "Avenida Governador Gayoso e Almendra", 10, "São João"),
+(44, "58400074", "Rua Bartolomeu de Gusmão", 77, "Centro"),
+(45, "81590603", "Rua Edson Luiz Dill", 17, "Uberaba"),
+(46, "49503135", "Rua Manoel Messias dos Santos", 45, "Serrano"),
+(47, "57044050", "Rua Capitão Correia", 130, "São Jorge"),
+(48, "68908112", "Avenida Padre José de Anchieta", 27, "Jesus de Nazaré"),
+(49, "64745265", "Rua Jutaí", 14, "Floresta Sul"),
+(50, "79083410", "Rua dos Mascates", 65, "Jardim Aero Rancho");
 
 
 -- -----------------------------------------------------
@@ -217,43 +218,70 @@ VALUES
 INSERT INTO `Saude_menos`.`Exames`
 (`id_exame`, `data_solicitacao`, `data_realizacao`, `grupo_exame`, `cod_exame`, `nome_exame`, `Laboratorios_cnes`, `Pacientes_num_prontuario`)
 VALUES 
-(1, '2022-02-12 14:22:00', '2022-05-12 14:00:00', 'A', '12345678', 'Endoscopia', 5241761, 1),
-(2, '2022-10-03 14:22:00', ' 2022-10-09 10:00:00', 'A', 87654321, 'Radioterapia', 8435671, 2), 
-(3, '2022-01-11 10:22:00', ' 2022-03-04 14:00:00', 'B', 87654321, 'Ginecologia', 2534123, 3), 
-(4, '2022-02-10 11:22:00', ' 2022-02-20 16:00:00', 'B', 87654321, 'Ginecologia', 1012431, 2), 
-(5, '2022-02-12 15:22:00', ' 2022-04-02 11:00:00', 'B', 87654321, 'Dermatologia', 9132652, 3), 
-(6, '2022-03-28 09:22:00', ' 2022-05-10 10:00:00', 'B', 87654321, 'Oftalmologia', 8241532, 4), 
-(7, '2022-01-29 08:20:00', ' 2022-03-05 08:00:00', 'D', 88012331, 'Dermatologia', 2341278, 5), 
-(8, '2022-09-10 17:22:00', ' 2022-10-01 11:00:00', 'A', 87654321, 'Radioterapia', 3849448, 6), 
-(9, '2022-08-17 07:22:00', ' 2022-09-03 15:00:00', 'A', 87654321, 'Endoscopia', 9898752, 7), 
-(10, '2022-04-18 16:32:00', ' 2022-07-0 07:00:00', 'A', 87654321, 'Ginecologia', 2652181, 8);
+(1, '2022-02-12 14:22:00', '2022-05-12 14:00:00', 'A', '2345678', 'Endoscopia', 5241761, 1),
+(2, '2022-10-03 14:22:00', '2022-10-09 10:00:00', 'A', 8654321, 'Radioterapia', 8435671, 2), 
+(3, '2022-01-11 10:22:00', '2022-03-04 14:00:00', 'B', 8765431, 'Ginecologia', 2534123, 3), 
+(4, '2022-02-10 11:22:00', '2022-02-20 16:00:00', 'B', 8765431, 'Ginecologia', 1012431, 2), 
+(5, '2022-02-12 15:22:00', '2022-04-02 11:00:00', 'B', 8764321, 'Dermatologia', 9132652, 3), 
+(6, '2022-03-28 09:22:00', '2022-05-10 10:00:00', 'B', 8754321, 'Oftalmologia', 8241532, 4), 
+(7, '2022-01-29 08:20:00', '2022-03-05 08:00:00', 'D', 8764321, 'Dermatologia', 2341278, 5), 
+(8, '2022-09-10 17:22:00', '2022-10-01 11:00:00', 'A', 8654321, 'Radioterapia', 3849448, 6), 
+(9, '2022-08-17 07:22:00', '2022-09-03 15:00:00', 'A', 2345678, 'Endoscopia', 9898752, 7), 
+(10, '2022-04-18 16:32:00', '2022-07-03 07:00:00', 'A', 8765431, 'Ginecologia', 2652181, 8);
 
 -- -----------------------------------------------------
--- Inserindo dados na tabela Médicos (FALTA AJUSTAR)
+-- Inserindo dados na tabela Médicos
 -- -----------------------------------------------------
-
 INSERT INTO `Saude_menos`.`Medicos` 
 (`cpf`, `crm`, `nome`, `nome_social`, `rqe`, `especialidade`, `sexo`, `email`, `salario`, `situacao`, `Enderecos_id_endereco`, `Telefones_ddd`, `Telefones_num_telefone`, `Hospitais_cnes`) 
-VALUES 
-('46041385409', '1122PE', 'Rosinalda Quintanilha de Lima', NULL, '1555', 'Dermatologista', 'F', 'rosinalda.lima@hop.com', 5675.00, '1', 31, '62', '986545130', '7648913'), 
-('62566822549', '4576PE', 'Margareth Portugal da Conceição', NULL, '3227', 'Psiquiatra', 'F', 'margareth.conceicao@gmail.com', 7500.00, '0', 42, 83, 971867561, 7648913), 
-('65485147852', '6766BA', 'Pablo Carminatti Andrade', NULL, 'NULL', 'Residente', 'M', 'pablo.andrade@hoc.com', 2550, '1', 43, 75, 985452624, 7623463), 
-('25752804272', '2322PE', 'Maria Alice Albuquerque Anjos', NULL, '5465', 'Oftalmologista', 'F', 'maria.anjos@sus.com', 3550, '1', 44, 12, 967787966, 7828463), 
-('61353868915', '4501PE', 'Thainá Salomão Sarmanto', NULL, '7898', 'Geriatra', 'F', 'thaina.sarmato@sus.com', 8000, '1', 46, 42, 975348420, 4389135), 
-('78433203347', '3311PE', 'Arthur Louzano Robadey', NULL, '3245', 'Cardiologista', 'M', 'arthur.robadey@sus.com', 8900, '1', 47, 85, 995228431, 5647384), 
-('18275217598', '5454BA', 'Luana Reis Muniz', NULL, '9897', 'Ginecologista', 'F', 'luana.muniz@sus.com', 9500, '1', 48, 79, 971414208, 7648913), 
-('17756873254', '2188PB', 'Rosali Prucho Heizelmann', NULL, '9897', 'Ginecologista', 'F', 'rosali.heizelmann@sus.com', 8500, '1', 49, 69, 981230964, 7623463), 
-('43984534400', '2770RJ', 'Sergio Gomes Alentejo', NULL, '1003', 'Clínico Geral', 'M', 'sergio.alentejo@sus.com', 5600, '1', 50, 84, 979156703, 7828463),
-('60882111485', '3110PE', 'Otavio Garcia', NULL, '1003', 'Clínico Geral', 'M', 'otavio.garcia@sus.com', 5505, '1', 51, 81, 987463732, 7828463);
+VALUES
+('46041385409', '1122PE', 'Rosinalda Quintanilha de Lima', NULL, '1555', 'Dermatologista', 'F', 'rosinalda.lima@hop.com', 5675.00, true, 31, '62', '986545130', '7648913'),
+('62566822549', '4576PE', 'Margareth Portugal da Conceição', NULL, '3227', 'Psiquiatra', 'F', 'margareth.conceicao@gmail.com', '7500.00', false, 42, '83', '971867561', 7648913),
+('65485147852', '6766BA', 'Pablo Carminatti Andrade', NULL, 'NULL', 'Residente', 'M', 'pablo.andrade@hoc.com', '2550', true, 43, '75', '985452624', 7623463), 
+('25752804272', '2322PE', 'Maria Alice Albuquerque Anjos', NULL, '5465', 'Oftalmologista', 'F', 'maria.anjos@sus.com', '3550', true, 44, '12', '967787966', 7828463), 
+('61353868915', '4501PE', 'Thainá Salomão Sarmanto', NULL, '7898', 'Geriatra', 'F', 'thaina.sarmato@sus.com', '8000', true, 46, '42', '975348420', 4389135), 
+('78433203347', '3311PE', 'Arthur Louzano Robadey', NULL, '3245', 'Cardiologista', 'M', 'arthur.robadey@sus.com', '8900', true, 47, '85', '995228431', 5647384), 
+('18275217598', '5454BA', 'Luana Reis Muniz', NULL, '9897', 'Ginecologista', 'F', 'luana.muniz@sus.com', '9500', true, 48, '79', '971414208', 7648913), 
+('17756873254', '2188PB', 'Rosali Prucho Heizelmann', NULL, '9897', 'Ginecologista', 'F', 'rosali.heizelmann@sus.com', '8500', true, 49, '69', '981230964', 7623463), 
+('43984534400', '2770RJ', 'Sergio Gomes Alentejo', NULL, '1003', 'Clínico Geral', 'M', 'sergio.alentejo@sus.com', '5600', true, 50, '84', '979156703', 7828463),
+('60882111485', '3110PE', 'Otavio Garcia', NULL, '1003', 'Clínico Geral', 'M', 'otavio.garcia@sus.com', 5505, true, 51, '81', '987463732', 7828463);
 
 
 -- -----------------------------------------------------
 -- Inserindo dados na tabela Diagnósticos
 -- -----------------------------------------------------
+INSERT INTO `Saude_menos`.`Diagnosticos`
+(`id_diagnostico`, `nome_patologia`, `cid_sigla`, `cid_cod`, `Medicos_cpf`, `Pacientes_num_prontuario`)
+VALUES
+(1, "Hipertensão", "A", 10, 65485147852, 1),
+(2, "Melasma", "A", 11, 62566822549, 4),
+(3, "Candidíase", "B", 12, 18275217598, 3),
+(4, "Candidíase", "B", 13, 18275217598, 22),
+(5, "Conjuntivite", "C", 14, 25752804272, 2),
+(6, "Glaucoma", "D", 15, 25752804272, 6),
+(7, "Candidíase", "D", 16, 17756873254, 8),
+(8, "Catarata", "D", 17, 25752804272, 4),
+(9, "Hipertensão", "A", 18, 60882111485, 7),
+(10, "Melasma", "B", 19, 43984534400, 22);
+
 
 -- -----------------------------------------------------
 -- Inserindo dados na tabela Consultas
 -- -----------------------------------------------------
+INSERT INTO `Saude_menos`.`Consultas`
+(`data_consulta`, `data_agendada`, `Medicos_cpf`, `Pacientes_num_prontuario`)
+VALUES
+(NULL, '2020-10-08 16:50:00','65485147852', 3),
+('2020-09-29 11:43:00', '2020-10-08 09:45:00','25752804272', 4),
+('2020-08-02 16:50:00', '2020-11-08 11:15:00','78433203347', 6),
+('2020-11-01 07:34:00', '2020-11-08 16:40:00','43984534400', 9),
+('2020-10-18 11:22:00', '2020-11-08 14:45:00','62566822549', 2),
+(NULL, '2020-10-08 14:35:00','18275217598', 7),
+(NULL, '2020-12-08 15:40:00','17756873254', 8),
+(NULL, '2020-12-08 10:25:00','61353868915', 5),
+(NULL, '2020-12-08 15:50:00','46041385409', 1),
+(NULL, '2020-10-08 17:10:00','60882111485', 10);
+
 
 -- -----------------------------------------------------
 -- Inserindo dados na tabela Pessoal_de_apoio
@@ -273,19 +301,17 @@ VALUES
 (12000422455, 10, "James Bravo",  NULL, 'M', "jamesbbravo@jourrapide.com", 1800.00, 10, 4389135, 40, 77, 981020166);
 
 
-
 -- -----------------------------------------------------
 -- Deetando dados nas tabelas
 -- -----------------------------------------------------
 
-DELETE FROM `Saude_menos`.`Medicos` WHERE `cpf` = `62566822549`;
+DELETE FROM `Saude_menos`.`Medicos` WHERE `cpf` = '62566822549';
 
-DELETE FROM `Saude_menos`.`Medicos` WHERE `cpf` = `460.413.854-09`;
-
+DELETE FROM `Saude_menos`.`Medicos` WHERE `cpf` = '46041385409';
 
 
 -- -----------------------------------------------------
--- atualizando dados nas tabelas
+-- Atualizando dados nas tabelas
 -- -----------------------------------------------------
 
 UPDATE `Saude_menos`.`Pacientes`

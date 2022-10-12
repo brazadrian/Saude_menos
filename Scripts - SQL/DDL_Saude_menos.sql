@@ -173,7 +173,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Saude_menos`.`Medicos`
+-- Table `Saude_menos`.`Médicos`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Saude_menos`.`Medicos` (
   `cpf` CHAR(11) NOT NULL,
@@ -185,7 +185,7 @@ CREATE TABLE IF NOT EXISTS `Saude_menos`.`Medicos` (
   `sexo` CHAR(1) NOT NULL,
   `email` VARCHAR(45) NULL,
   `salario` DECIMAL(10,2) NULL,
-  `situacao` BIT NOT NULL,
+  `situacao` BOOLEAN NOT NULL,
   `Enderecos_id_endereco` INT NOT NULL,
   `Telefones_ddd` CHAR(2) NOT NULL,
   `Telefones_num_telefone` VARCHAR(9) NOT NULL,
