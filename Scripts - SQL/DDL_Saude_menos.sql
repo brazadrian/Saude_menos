@@ -19,10 +19,9 @@ CREATE TABLE IF NOT EXISTS `Saude_menos`.`Enderecos` (
   `rua` VARCHAR(90) NULL,
   `numero` INT NULL,
   `bairro` VARCHAR(45) NULL,
-  `estado` CHAR(2) NULL,
+  `estado` CHAR(2) NULL DEFAULT 'PE',
   PRIMARY KEY (`id_endereco`))
 ENGINE = InnoDB;
-
 
 -- -----------------------------------------------------
 -- Table `Saude_menos`.`Telefones`
@@ -72,8 +71,8 @@ CREATE TABLE IF NOT EXISTS `Saude_menos`.`Ambulatorios` (
   CONSTRAINT `fk_Ambulatorios_Hospitais1`
     FOREIGN KEY (`Hospitais_cnes`)
     REFERENCES `Saude_menos`.`Hospitais` (`cnes`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -103,13 +102,13 @@ CREATE TABLE IF NOT EXISTS `Saude_menos`.`Solicitacoes` (
   CONSTRAINT `fk_Hospitais_has_Laboratorios_Hospitais`
     FOREIGN KEY (`Hospitais_cnes`)
     REFERENCES `Saude_menos`.`Hospitais` (`cnes`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_Hospitais_has_Laboratorios_Laboratorios1`
     FOREIGN KEY (`Laboratorios_cnes`)
     REFERENCES `Saude_menos`.`Laboratorios` (`cnes`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -153,7 +152,7 @@ CREATE TABLE IF NOT EXISTS `Saude_menos`.`Exames` (
   `data_solicitacao` DATE NOT NULL,
   `data_realizacao` DATETIME NULL,
   `grupo_exame` CHAR(1) NOT NULL,
-  `cod_exame` CHAR(8) NOT NULL,
+  `cod_exame` CHAR(7) NOT NULL,
   `nome_exame` VARCHAR(90) NULL,
   `Laboratorios_cnes` VARCHAR(7) NOT NULL,
   `Pacientes_num_prontuario` INT NOT NULL,
@@ -237,7 +236,7 @@ ENGINE = InnoDB;
 -- Table `Saude_menos`.`Consultas`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Saude_menos`.`Consultas` (
-  `data_consulta` DATETIME NOT NULL,
+  `data_consulta` DATETIME NULL,
   `data_agendada` DATETIME NOT NULL,
   `Medicos_cpf` CHAR(11) NOT NULL,
   `Pacientes_num_prontuario` INT NOT NULL,
@@ -247,13 +246,13 @@ CREATE TABLE IF NOT EXISTS `Saude_menos`.`Consultas` (
   CONSTRAINT `fk_Consultas_Medicos1`
     FOREIGN KEY (`Medicos_cpf`)
     REFERENCES `Saude_menos`.`Medicos` (`cpf`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_Consultas_Pacientes1`
     FOREIGN KEY (`Pacientes_num_prontuario`)
     REFERENCES `Saude_menos`.`Pacientes` (`num_prontuario`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -296,15 +295,40 @@ CREATE TABLE IF NOT EXISTS `Saude_menos`.`Pessoal_de_apoio` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
--- Alterações
 
+-- -----------------------------------------------------
+-- Alterações nas tabelas
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
 -- Alterar char(11) para char(8) no CEP de enderecos
+-- -----------------------------------------------------
 ALTER TABLE `Saude_menos`.`Enderecos`
 	MODIFY COLUMN `cep` CHAR(8) NOT NULL;
-    
+
+-- -----------------------------------------------------
+-- Alterar XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+-- -----------------------------------------------------    
 ALTER TABLE `Saude_menos`.`Enderecos`
-	ADD COLUMN `cidade` CHAR(45)
+	ADD COLUMN `cidade` CHAR(45) NULL DEFAULT 'Recife'
 		AFTER `bairro`;
+
+-- -----------------------------------------------------
+-- Alterar XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+-- -----------------------------------------------------  
+ALTER TABLE `Saude_menos`.`Exames`
+	MODIFY COLUMN `cod_exame` CHAR(8);
+
+-- -----------------------------------------------------
+-- Alterar XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+-- -----------------------------------------------------  
+ALTER TABLE `Saude_menos`.`Consultas`
+	MODIFY COLUMN `data_consulta` DATETIME;
+
+-- -----------------------------------------------------
+-- Alterar XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+-- -----------------------------------------------------  
+ALTER TABLE
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
