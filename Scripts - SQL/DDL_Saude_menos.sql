@@ -345,6 +345,14 @@ ALTER TABLE `Saude_menos`.`Consultas`
 ALTER TABLE `Saude_menos`.`Pacientes`
 	ADD COLUMN `data_nascimento` DATE AFTER `nome_social`;
 
+-- -----------------------------------------------------
+-- Modificar a coluna data_solicitacao de exames para datetime
+-- -----------------------------------------------------
+ALTER TABLE `Saude_menos`.`Exames`
+	MODIFY COLUMN `data_solicitacao` DATETIME;
+    
+    
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

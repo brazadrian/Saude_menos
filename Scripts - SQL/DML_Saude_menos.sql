@@ -53,7 +53,8 @@ VALUES
 (47, "57044050", "Rua Capitão Correia", 130, "São Jorge"),
 (48, "68908112", "Avenida Padre José de Anchieta", 27, "Jesus de Nazaré"),
 (49, "64745265", "Rua Jutaí", 14, "Floresta Sul"),
-(50, "79083410", "Rua dos Mascates", 65, "Jardim Aero Rancho");
+(50, "79083410", "Rua dos Mascates", 65, "Jardim Aero Rancho"),
+(51, "52131320", "Rua Vermelho e Amarelo", 13, "Foice e Martelo");
 
 
 -- -----------------------------------------------------
@@ -235,16 +236,16 @@ VALUES
 INSERT INTO `Saude_menos`.`Medicos` 
 (`cpf`, `crm`, `nome`, `nome_social`, `rqe`, `especialidade`, `sexo`, `email`, `salario`, `situacao`, `Enderecos_id_endereco`, `Telefones_ddd`, `Telefones_num_telefone`, `Hospitais_cnes`) 
 VALUES
-('46041385409', '1122PE', 'Rosinalda Quintanilha de Lima', NULL, '1555', 'Dermatologista', 'F', 'rosinalda.lima@hop.com', 5675.00, true, 31, '62', '986545130', '7648913'),
+('46041385409', '1122PE', 'Rosinalda Quintanilha de Lima', NULL, '1555', 'Dermatologista', 'F', 'rosinalda.lima@hop.com', 5675.00, true, 41, '62', '986545130', '7648913'),
 ('62566822549', '4576PE', 'Margareth Portugal da Conceição', NULL, '3227', 'Psiquiatra', 'F', 'margareth.conceicao@gmail.com', '7500.00', false, 42, '83', '971867561', 7648913),
 ('65485147852', '6766BA', 'Pablo Carminatti Andrade', NULL, 'NULL', 'Residente', 'M', 'pablo.andrade@hoc.com', '2550', true, 43, '75', '985452624', 7623463), 
 ('25752804272', '2322PE', 'Maria Alice Albuquerque Anjos', NULL, '5465', 'Oftalmologista', 'F', 'maria.anjos@sus.com', '3550', true, 44, '12', '967787966', 7828463), 
-('61353868915', '4501PE', 'Thainá Salomão Sarmanto', NULL, '7898', 'Geriatra', 'F', 'thaina.sarmato@sus.com', '8000', true, 46, '42', '975348420', 4389135), 
-('78433203347', '3311PE', 'Arthur Louzano Robadey', NULL, '3245', 'Cardiologista', 'M', 'arthur.robadey@sus.com', '8900', true, 47, '85', '995228431', 5647384), 
-('18275217598', '5454BA', 'Luana Reis Muniz', NULL, '9897', 'Ginecologista', 'F', 'luana.muniz@sus.com', '9500', true, 48, '79', '971414208', 7648913), 
-('17756873254', '2188PB', 'Rosali Prucho Heizelmann', NULL, '9897', 'Ginecologista', 'F', 'rosali.heizelmann@sus.com', '8500', true, 49, '69', '981230964', 7623463), 
-('43984534400', '2770RJ', 'Sergio Gomes Alentejo', NULL, '1003', 'Clínico Geral', 'M', 'sergio.alentejo@sus.com', '5600', true, 50, '84', '979156703', 7828463),
-('60882111485', '3110PE', 'Otavio Garcia', NULL, '1003', 'Clínico Geral', 'M', 'otavio.garcia@sus.com', 5505, true, 51, '81', '987463732', 7828463);
+('61353868915', '4501PE', 'Thainá Salomão Sarmanto', NULL, '7898', 'Geriatra', 'F', 'thaina.sarmato@sus.com', '8000', true, 45, '42', '975348420', 4389135), 
+('78433203347', '3311PE', 'Arthur Louzano Robadey', NULL, '3245', 'Cardiologista', 'M', 'arthur.robadey@sus.com', '8900', true, 46, '85', '995228431', 5647384), 
+('18275217598', '5454BA', 'Luana Reis Muniz', NULL, '9897', 'Ginecologista', 'F', 'luana.muniz@sus.com', '9500', true, 47, '79', '971414208', 7648913), 
+('17756873254', '2188PB', 'Rosali Prucho Heizelmann', NULL, '9897', 'Ginecologista', 'F', 'rosali.heizelmann@sus.com', '8500', true, 48, '69', '981230964', 7623463), 
+('43984534400', '2770RJ', 'Sergio Gomes Alentejo', NULL, '1003', 'Clínico Geral', 'M', 'sergio.alentejo@sus.com', '5600', true, 49, '84', '979156703', 7828463),
+('60882111485', '3110PE', 'Otavio Garcia', NULL, '1003', 'Clínico Geral', 'M', 'otavio.garcia@sus.com', 5505, true, 50, '81', '987463732', 7828463);
 
 
 -- -----------------------------------------------------
@@ -294,25 +295,16 @@ VALUES
 INSERT INTO `Saude_menos`.`Pessoal_de_apoio`
 (`cpf`, `matricula`, `nome`, `nome_social`, `sexo`, `email`, `salario`, `Ambulatorios_id_ambulatorios`, `Ambulatorios_Hospitais_cnes`, `Enderecos_id_endereco`, `Telefones_ddd`, `Telefones_num_telefone`)
 VALUES
-(32015787451, 1, "Eduardo Barros", NULL, 'M', "eduardopintobarros@rhyta.com", 1800.00, 1, 7648913, 31, 21, 974325120),
-(17019437559, 2, "Eduarda Correia",  NULL, 'F', "eduardaoliveiracorreia@dayrep.com", 1800.00, 2, 7623463, 32, 44, 984875266),
-(22015287453, 3, "Sarah Alves",  NULL, 'F', "sarahferreiraalves@fleckens.hu", 1800.00, 3, 7828463, 33, 75, 983376911),
-(08015427457, 4, "Willian Robinson",  NULL, 'M', "williecrobinson@dayrep.com", 1800.00, 4, 9623463, 34, 81, 987875277),
-(03012325451, 5, "Kauan Gomes",  NULL, 'M', "kauancastrogomes@einrot.com", 1800.00, 5, 9623463, 35, 92, 989976923),
-(07518848454, 6, "Kenneth Jamison",  NULL, 'M', "kennethtjamison@teleworm.us", 1800.00, 6, 4389135, 36, 75, 980075511),
-(13098423412, 7, "Jason Jacobson",  NULL, 'M', "jasoncjacobson@jourrapide.com", 1800.00, 7, 7828463, 37, 95, 982210101),
-(06315924413, 8, "Gabrielle Barbosa",  NULL, 'F', "gabriellefernandesbarbosa@dayrep.com", 1800.00, 8, 7623463, 38, 81, 981075122),
-(18009420450, 9, "Dolores Payne",  NULL, 'F', "doloresdpayne@rhyta.com", 1800.00, 9, 7648913, 39, 75, 981013100),
-(12000422455, 10, "James Bravo",  NULL, 'M', "jamesbbravo@jourrapide.com", 1800.00, 10, 4389135, 40, 77, 981020166);
-
--- -----------------------------------------------------
--- Deetando dados nas tabelas
--- -----------------------------------------------------
-
-DELETE FROM `Saude_menos`.`Medicos` WHERE `cpf` = '62566822549';
-
-DELETE FROM `Saude_menos`.`Medicos` WHERE `cpf` = '46041385409';
-
+(32015787451, 1, "Eduardo Barros", NULL, 'M', "eduardopintobarros@rhyta.com", 1800.00, 1, 7648913, 31, 12, 967787966),
+(17019437559, 2, "Eduarda Correia",  NULL, 'F', "eduardaoliveiracorreia@dayrep.com", 1800.00, 2, 7623463, 32, 81, 981567843),
+(22015287453, 3, "Sarah Alves",  NULL, 'F', "sarahferreiraalves@fleckens.hu", 1800.00, 3, 7828463, 33, 81, 982341235),
+(08015427457, 4, "Willian Robinson",  NULL, 'M', "williecrobinson@dayrep.com", 1800.00, 4, 9623463, 34, 81, 982664821),
+(03012325451, 5, "Kauan Gomes",  NULL, 'M', "kauancastrogomes@einrot.com", 1800.00, 5, 9623463, 35, 81, 983524172),
+(07518848454, 6, "Kenneth Jamison",  NULL, 'M', "kennethtjamison@teleworm.us", 1800.00, 6, 4389135, 36, 81, 984762897),
+(13098423412, 7, "Jason Jacobson",  NULL, 'M', "jasoncjacobson@jourrapide.com", 1800.00, 7, 7828463, 37, 81, 986356212),
+(06315924413, 8, "Gabrielle Barbosa",  NULL, 'F', "gabriellefernandesbarbosa@dayrep.com", 1800.00, 8, 7623463, 38, 81, 983524172),
+(18009420450, 9, "Dolores Payne",  NULL, 'F', "doloresdpayne@rhyta.com", 1800.00, 9, 7648913, 39, 81, 984762897),
+(12000422455, 10, "James Bravo",  NULL, 'M', "jamesbbravo@jourrapide.com", 1800.00, 10, 4389135, 40, 81, 986356212);
 
 -- -----------------------------------------------------
 -- Atualizando dados nas tabelas
@@ -376,14 +368,7 @@ SET `data` = '2022-09-07 16:25:17'
 WHERE `id_solicitacao` = 1;
 
 
-UPDATE `Saude_menos`.`Hospitais`
-SET `Telefones_ddd` = '81', `Telefones_num_telefone` = '988648597'
-WHERE `cnes` = '7623463';
 
-
-UPDATE `Saude_menos`.`Medicos`
-SET `Telefones_ddd` = '81', `Telefones_num_telefone` = '981264597'
-WHERE `cpf` = '61353868915';
 
 UPDATE `Saude_menos`.`Solicitacoes`
 SET `Laboratorios_cnes` = '8435671'
@@ -393,7 +378,7 @@ UPDATE `Saude_menos`.`Consultas`
 SET `Medicos_cpf` = '46041385409'
 WHERE `Pacientes_num_prontuario` = '3';
 
-/*4 updates - maiara
+/*6 updates - maiara
 não pode usar chave estrangeira*/
 
 
