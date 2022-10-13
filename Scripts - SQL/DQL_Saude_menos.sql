@@ -39,21 +39,24 @@ SELECT p.num_prontuario, p.cpf, p.nome, p.sexo, ex.nome_exame
 		WHERE e.bairro = 'Santo Antônio';
 
 /*
-4 (QUARTA) CONSULTA
+4 (QUARTA) CONSULTA (incompleta)
 Listar nome de pacientes e a quantidade de consultas realizadas por eles
 trazendo as colunas num_prontuario, cpf, nome, sexo
 ordenado pelo nome.
 */
 
-SELECT p.num_prontuario, p.cpf, p.nome, p.sexo, (SELECT COUNT(c.Pacientes_num_paciente) "Quantida de de consultas"
-	FROM Consultas c WHERE c.Pacientes_num_prontuario = p.num_paciente) 
-    FROM Pacientes as p
-		ORDER BY p.nome;
-
-SELECT p.num_prontuario, p.cpf, p.nome, p.sexo, (SELECT COUNT(c.Pacientes_num_paciente) "Quantida de de consultas"
-	FROM Consultas c WHERE c.Pacientes_num_prontuario = p.num_paciente) 
-    FROM Pacientes as p
-		ORDER BY p.nome;
+SELECT pac.num_prontuario "Nº Prontuário", pac.cpf "CPF", pac.nome "Nome", pac.sexo "Sexo", cst.data_consulta "Consulta", COUNT(cst.Pacientes_num_prontuario)
+	FROM Consultas AS cst
+		INNER JOIN Pacientes AS pac
+        ON pac.num_prontuario = cst.Pacientes_num_prontuario
+        WHERE cst.data_consulta IS NOT NULL
+        GROUP BY cst.Pacientes_num_prontuario, pac.num_prontuario, pac.cpf, pac.nome, pac.sexo, cst.data_consulta
+        ORDER BY pac.nome;
+/*
+SELECT COUNT(cst.Pacientes_num_prontuario), cst.data_consulta
+	FROM Consultas AS cst
+		INNER JOIN Pacientes AS pac;
+*/
 
 /*
 5 (QUINTA) CONSULTA
@@ -63,8 +66,9 @@ ordenado por nome do médico.
 */
 
 SELECT med.cpf "CPF", med.crm "CRM", med.nome "Nome", med.salario "Salário", e.bairro "Bairro"
-	FROM medicos med
-		INNER JOIN Enderecos e ON med.Enderecos_id_endereco = e.id_endereco
+	FROM Medicos AS med
+		LEFT JOIN Enderecos e ON med.Enderecos_id_endereco = e.id_endereco
+        GROUP BY med.cpf, med.crm, med.nome, med.salario, e.bairro
 		HAVING salario < (SELECT AVG(salario) FROM Medicos)
 			ORDER BY med.nome;
 
@@ -75,11 +79,14 @@ trazendo as colunas cpf, crm, nome, especialidade, salario e bairro
 ordenado por nome do médico.
 */
 
-SELECT med.cpf "CPF", med.crm "CRM", med.nome "Nome", med.salario "Salário", e.bairro "Bairro" FROM medicos med
-	INNER JOIN Enderecos e ON med.Enderecos_id_endereco = e.id_endereco
-	HAVING salario > (SELECT AVG(salario) FROM medicos)
-		WHERE especialidade = "Clínico"
-			ORDER BY med.nome;
+SELECT med.cpf "CPF", med.crm "CRM", med.nome "Nome", med.especialidade "Especialidade", med.salario "Salário", edr.bairro "Bairro"
+	FROM Medicos med
+		INNER JOIN Enderecos AS edr
+			ON med.Enderecos_id_endereco = edr.id_endereco
+		WHERE especialidade = "Ginecologi%"
+		GROUP BY med.cpf, med.crm, med.nome, med.especialidade, med.salario, edr.bairro
+		HAVING `salario` > (SELECT AVG(salario) FROM Medicos)
+            ORDER BY med.nome;
 
 /*
 7 (SÉTIMA) CONSULTA
