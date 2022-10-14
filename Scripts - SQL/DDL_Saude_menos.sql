@@ -177,7 +177,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Saude_menos`.`Medicos` (
   `cpf` CHAR(11) NOT NULL,
-  `crm` VARCHAR(8) NULL COMMENT 'Antes era subdividida em duas colunas, UF-CRM e CRM. Agora, quando for fazer a inserção de dados, adicionar a UF nos caracteres\nEx.:\nPE1025',
+  `crm` VARCHAR(8) NULL,
   `nome` VARCHAR(90) NOT NULL,
   `nome_social` VARCHAR(90) NULL DEFAULT '',
   `rqe` CHAR(4) NULL,

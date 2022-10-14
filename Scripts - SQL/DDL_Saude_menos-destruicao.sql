@@ -1,3 +1,10 @@
+TRUNCATE TABLE `Saude_menos`.`Pessoal_de_apoio`;
+TRUNCATE TABLE `Saude_menos`.`Consultas`;
+TRUNCATE TABLE `Saude_menos`.`Diagnosticos`;
+TRUNCATE TABLE `Saude_menos`.`Exames`;
+TRUNCATE TABLE `Saude_menos`.`Solicitacoes`;
+
+
 DROP TABLE `Saude_menos`.`Pessoal_de_apoio`;
 
 DROP TABLE `Saude_menos`.`Consultas`;

@@ -44,8 +44,7 @@ Listar nome de pacientes e a quantidade de consultas realizadas por eles
 trazendo as colunas num_prontuario, cpf, nome, sexo
 ordenado pelo nome.
 */
--- TERMINAR ESSA AQUI***************************************************************
-SELECT pac.num_prontuario "Nº Prontuário", pac.cpf "CPF", pac.nome "Nome", pac.sexo "Sexo", cst.data_consulta "Consulta", COUNT(cst.Pacientes_num_prontuario)
+SELECT pac.num_prontuario "Nº Prontuário", pac.cpf "CPF", pac.nome "Nome", pac.sexo "Sexo", cst.data_consulta "Consulta", COUNT(cst.Pacientes_num_prontuario) ""
 	FROM Consultas AS cst
 		INNER JOIN Pacientes AS pac
         ON pac.num_prontuario = cst.Pacientes_num_prontuario
@@ -94,8 +93,6 @@ Listar nome de pacientes e a quantidade de exames realizadas por eles,
 trazendo as colunas num_prontuario, cpf, nome, sexo e cidade
 ordenado pelo nome.
 */
-
-
 
 SELECT p.num_prontuario, p.cpf, p.nome, p.sexo, e.cidade, (SELECT COUNT(ex.Pacientes_num_paciente)
 	FROM Exames ex WHERE ex.Pacientes_num_paciente = p.num_paciente) "Quantidade de exames"
