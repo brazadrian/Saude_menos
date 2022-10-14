@@ -44,7 +44,7 @@ Listar nome de pacientes e a quantidade de consultas realizadas por eles
 trazendo as colunas num_prontuario, cpf, nome, sexo
 ordenado pelo nome.
 */
-
+-- TERMINAR ESSA AQUI***************************************************************
 SELECT pac.num_prontuario "Nº Prontuário", pac.cpf "CPF", pac.nome "Nome", pac.sexo "Sexo", cst.data_consulta "Consulta", COUNT(cst.Pacientes_num_prontuario)
 	FROM Consultas AS cst
 		INNER JOIN Pacientes AS pac
@@ -74,7 +74,7 @@ SELECT med.cpf "CPF", med.crm "CRM", med.nome "Nome", med.salario "Salário", e.
 
 /*
 6 (SEXTA) CONSULTA
-Listar os médicos que ganham acima da média salarial de todos os médicos da especialidade clinica,
+Listar os médicos que ganham acima da média salarial de todos os médicos da especialidade Ginecologistas,
 trazendo as colunas cpf, crm, nome, especialidade, salario e bairro
 ordenado por nome do médico.
 */
@@ -83,7 +83,7 @@ SELECT med.cpf "CPF", med.crm "CRM", med.nome "Nome", med.especialidade "Especia
 	FROM Medicos med
 		INNER JOIN Enderecos AS edr
 			ON med.Enderecos_id_endereco = edr.id_endereco
-		WHERE especialidade = "Ginecologi%"
+		WHERE med.especialidade LIKE "Ginecologi%"
 		GROUP BY med.cpf, med.crm, med.nome, med.especialidade, med.salario, edr.bairro
 		HAVING `salario` > (SELECT AVG(salario) FROM Medicos)
             ORDER BY med.nome;
@@ -94,7 +94,11 @@ Listar nome de pacientes e a quantidade de exames realizadas por eles,
 trazendo as colunas num_prontuario, cpf, nome, sexo e cidade
 ordenado pelo nome.
 */
-SELECT p.num_prontuario, p.cpf, p.nome, p.sexo, e.cidade, (SELECT COUNT(ex.Pacientes_num_paciente) FROM Exames ex WHERE ex.Pacientes_num_paciente = p.num_paciente) ”Quantidade de exames”
+
+
+
+SELECT p.num_prontuario, p.cpf, p.nome, p.sexo, e.cidade, (SELECT COUNT(ex.Pacientes_num_paciente)
+	FROM Exames ex WHERE ex.Pacientes_num_paciente = p.num_paciente) "Quantidade de exames"
 	FROM pacientes as p
 	INNER JOIN endereco as e on e.id_endereco = p.Endereco_id_endereco
 		GROUP BY p.nome
