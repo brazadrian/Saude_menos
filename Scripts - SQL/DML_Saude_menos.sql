@@ -329,13 +329,10 @@ UPDATE `Saude_menos`.`Pessoal_de_apoio`
 SET `nome_social` = 'Silvio Da Santos Sauro'
 WHERE `cpf` = '32015787451';
 
-/*
-Possível melhoria:
-
 UPDATE `Saude_menos`.`Pessoal_de_apoio`
 SET `Telefones_ddd` = '81', `Telefones_num_telefone` =  '988563267'
 WHERE `cpf` = '17019437559';
-*/
+
 
 UPDATE `Saude_menos`.`Pessoal_de_apoio`
 SET `email` = 'robertinho123@hotmail.com'
@@ -357,18 +354,13 @@ UPDATE `Saude_menos`.`Medicos`
 SET `email` = 'draangela34@yahoo.com'
 WHERE `cpf` = '25752804272';
 
-
 UPDATE `Saude_menos`.`Pessoal_de_apoio`
 SET `nome` = 'Joana Meneses Santos', `sexo` = 'F'
 WHERE `cpf` = '87954631259';
 
-
 UPDATE `Saude_menos`.`Solicitacoes`
 SET `data` = '2022-09-07 16:25:17'
 WHERE `id_solicitacao` = 1;
-
-
-
 
 UPDATE `Saude_menos`.`Solicitacoes`
 SET `Laboratorios_cnes` = '8435671'
@@ -378,7 +370,5 @@ UPDATE `Saude_menos`.`Consultas`
 SET `Medicos_cpf` = '46041385409'
 WHERE `Pacientes_num_prontuario` = '3';
 
-/*6 updates - maiara
-não pode usar chave estrangeira*/
 
 
