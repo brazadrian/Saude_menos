@@ -4,39 +4,39 @@
 1 (PRIMEIRA) CONSULTA
 Listar as consultas realizadas entre Janeiro de 2020 e Outubro de 2022
 trazendo as Datas das consultas, Prontuário do paciente, CPF, Nome e Sexo do Paciente
-por ordem alfabética
+por ordem decrescente
 */
 
-SELECT pac.nome "Nome", pac.cpf "CPF", pac.num_prontuario "Nº Prontuário", pac.sexo "Sexo", cst.data_consulta "Data da Consulta"
-	FROM Pacientes as pac
-	INNER JOIN Consultas AS cst ON pac.num_prontuario = cst.Pacientes_num_prontuario
-	WHERE cst.data_consulta BETWEEN '2020-01-01 00:01' AND '2022-10-12'
-		ORDER BY cst.data_consulta DESC;
+SELECT p.nome "Nome", p.cpf "CPF", p.num_prontuario "Nº Prontuário", p.sexo "Sexo", c.data_consulta "Data da Consulta"
+	FROM Pacientes p
+	INNER JOIN Consultas c ON p.num_prontuario =      c.Pacientes_num_prontuario
+	WHERE c.data_consulta BETWEEN '2020-01-01 00:01' AND '2022-10-12'
+		ORDER BY c.data_consulta DESC;
         
 /*
 2 (SEGUNDA) CONSULTA
-Listar os médicos que têm o CRM emitido em Pernambuco
+Listar os médicos que possuem nome iniciado com ”A”
 trazendo as colunas cpf, crm, nome, especialidade e telefone
 por ordem crescente.
 */
 
-SELECT med.cpf, med.crm, med.nome, med.especialidade, tel.num_telefone
-	FROM Medicos AS med
-	LEFT JOIN Telefones AS tel on med.Telefones_num_telefone = tel.num_telefone
-    WHERE med.crm like '%PE'
-		ORDER BY med.nome ASC;
+SELECT m.cpf, m.crm, m.nome, m.especialidade, t.num_telefone
+	FROM Medicos as m
+	INNER JOIN Telefones as t on m.Telefones_num_telefone = t.num_telefone
+	WHERE m.nome like 'A%'
+		ORDER BY m.nome;
 
 /*
 3 (TERCEIRA) CONSULTA
 Listar os pacientes que são do bairro de Santo Antônio e possuem ao menos 1 exame realizado,
-trazendo as colunas num_prontuario, nome, cpf, sexo e nome_exame
+trazendo as colunas num_prontuario, cpf, nome, sexo e nome_exame
 */
-SELECT pac.num_prontuario "Prontuário", pac.nome "Nome", pac.cpf "CPF", pac.sexo "Sexo", exa.nome_exame "Exame"
-	FROM Pacientes as pac
-	INNER JOIN Enderecos AS edr ON edr.id_endereco = pac.Enderecos_id_endereco
-	INNER JOIN Exames AS exa ON exa.Pacientes_num_prontuario = pac.num_prontuario
-		WHERE edr.bairro = 'Santo Antônio';
-        
+-- colocar quantos exames eles fizeram (count)
+SELECT p.num_prontuario, p.cpf, p.nome, p.sexo, ex.nome_exame
+	FROM Pacientes as p 
+	INNER JOIN Enderecos as e on e.id_endereco = p.Enderecos_id_endereco
+	INNER JOIN Exames as ex on ex.Pacientes_num_prontuario = p.num_prontuario
+		WHERE e.bairro = 'Santo Antônio';
 
 /*
 4 (QUARTA) CONSULTA (incompleta)
@@ -185,16 +185,36 @@ INNER JOIN Exames as ex ON ex.Pacientes_num_prontuario = p.num_prontuario
 
 /*
 18 (DÉCIMA OITAVA) CONSULTA
-*/
+Listar nome, número de prontuario e data de nascimento de pacientes que nasceram entre 1940 1980.
+*/ 
+
+/* CREATE VIEW pacientes_40mais AS */
+SELECT nome, data_nascimento, num_prontuario FROM Pacientes
+	WHERE data_nascimento BETWEEN '1940-01-01' AND '1980-01-01'
+	ORDER BY data_nascimento;
+
 
 /*
 19 (DÉCIMA NONA) CONSULTA
+Lista dos hospitais e médicos localizados no bairro da Boa Vista, trazendo as colunas (bairro, nome hospital, nome médico).
 */
+
+SELECT e.bairro 'Bairro', h.nome 'Hospital', m.nome 'medico'
+FROM enderecos AS e
+LEFT JOIN hospitais AS h ON h.Enderecos_id_endereco = e.id_endereco
+LEFT JOIN medicos AS m ON m.Enderecos_id_endereco = e.id_endereco
+WHERE e.bairro = 'Boa Vista';
+
 
 /*
 20 (VIGÉSIMA) CONSULTA
-*/´
+Lista dos telefones dos pacientes, trazendo as colunas (número telefone, nome paciente), ordenado por nome paciente.
+*/
 
+SELECT p.nome 'Paciente', t.num_telefone 'Telefone'
+FROM telefones AS t
+INNER JOIN pacientes AS p ON p.Telefones_ddd = t.ddd
+ORDER BY p.nome;
 
 
 
