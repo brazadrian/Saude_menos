@@ -107,21 +107,22 @@ SELECT pac.nome "Nome", COUNT(exa.Pacientes_num_prontuario) "Exames", pac.sexo, 
 /*
 8 (OITAVA) CONSULTA
 Informe a soma de consultas realizadas por dia, 
-trazendo as colunas data_consulta, nome do médico, especialidade, sexo e email
-Considernado que as consutlas realizadas são as de data_consulta
+trazendo as colunas Dia, Mês e ano da consulta, quantas o médico fez, seu nome e sexo
+Ordenar pelas datas das consultas
 */
 
 SELECT
-	cst.data_consulta,
     EXTRACT(DAY FROM cst.data_consulta) AS Dia,
     EXTRACT(MONTH FROM cst.data_consulta) AS `Mês`,
-    EXTRACT(YEAR FROM cst.data_consulta) AS Ano,,
+    EXTRACT(YEAR FROM cst.data_consulta) AS Ano,
+    COUNT(cst.Medicos_cpf) "Consultas",
     med.nome "Médico"
 FROM Consultas AS cst
 INNER JOIN Medicos AS med
 ON cst.Medicos_cpf = med.cpf
 WHERE cst.data_consulta IS NOT NULL
-ORDER BY `Mês`, Dia ASC;
+GROUP BY(Dia)
+ORDER BY cst.data_consulta;
 
 /*
 9 (NONA) CONSULTA
