@@ -90,16 +90,18 @@ SELECT med.cpf "CPF", med.crm "CRM", med.nome "Nome", med.especialidade "Especia
 /*
 7 (SÉTIMA) CONSULTA
 Listar nome de pacientes e a quantidade de exames realizadas por eles,
-trazendo as colunas num_prontuario, cpf, nome, sexo e cidade
-ordenado pelo nome.
+trazendo as colunas num_prontuario, cpf, nome, sexo e bairro
+ordenado pelos bairros reincidentes.
 */
 
-SELECT p.num_prontuario, p.cpf, p.nome, p.sexo, e.cidade, (SELECT COUNT(ex.Pacientes_num_paciente)
-	FROM Exames ex WHERE ex.Pacientes_num_paciente = p.num_paciente) "Quantidade de exames"
-	FROM pacientes as p
-	INNER JOIN endereco as e on e.id_endereco = p.Endereco_id_endereco
-		GROUP BY p.nome
-			ORDER BY p.nome;
+SELECT pac.nome "Nome", COUNT(exa.Pacientes_num_prontuario) "Exames", edr.bairro "Bairro"
+	FROM Saude_menos.Pacientes AS pac
+	INNER JOIN Exames AS exa
+		ON pac.num_prontuario = exa.Pacientes_num_prontuario
+	INNER JOIN Enderecos AS edr
+        ON pac.Enderecos_id_endereco = edr.id_endereco
+			GROUP BY(pac.num_prontuario)
+            ORDER BY edr.bairro DESC;
 
 
 /*
