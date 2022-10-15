@@ -90,26 +90,38 @@ SELECT med.cpf "CPF", med.crm "CRM", med.nome "Nome", med.especialidade "Especia
 /*
 7 (SÉTIMA) CONSULTA
 Listar nome de pacientes e a quantidade de exames realizadas por eles,
-trazendo as colunas num_prontuario, cpf, nome, sexo e bairro
-ordenado pelos bairros reincidentes.
+trazendo as colunas nome, quantidade de exames, sexo e bairro
+ordenado pelo bairro e depois por sexo.
 */
 
-SELECT pac.nome "Nome", COUNT(exa.Pacientes_num_prontuario) "Exames", edr.bairro "Bairro"
+SELECT pac.nome "Nome", COUNT(exa.Pacientes_num_prontuario) "Exames", pac.sexo, edr.bairro "Bairro"
 	FROM Saude_menos.Pacientes AS pac
 	INNER JOIN Exames AS exa
 		ON pac.num_prontuario = exa.Pacientes_num_prontuario
 	INNER JOIN Enderecos AS edr
         ON pac.Enderecos_id_endereco = edr.id_endereco
 			GROUP BY(pac.num_prontuario)
-            ORDER BY edr.bairro DESC;
+            ORDER BY edr.bairro DESC, pac.sexo;
 
 
 /*
 8 (OITAVA) CONSULTA
 Informe a soma de consultas realizadas por dia, 
-trazendo as colunas data_consulta, nome do médico, especialidade, sexo e email. (join)
+trazendo as colunas data_consulta, nome do médico, especialidade, sexo e email
+Considernado que as consutlas realizadas são as de data_consulta
 */
 
+SELECT
+	cst.data_consulta,
+    EXTRACT(DAY FROM cst.data_consulta) AS Dia,
+    EXTRACT(MONTH FROM cst.data_consulta) AS `Mês`,
+    EXTRACT(YEAR FROM cst.data_consulta) AS Ano,,
+    med.nome "Médico"
+FROM Consultas AS cst
+INNER JOIN Medicos AS med
+ON cst.Medicos_cpf = med.cpf
+WHERE cst.data_consulta IS NOT NULL
+ORDER BY `Mês`, Dia ASC;
 
 /*
 9 (NONA) CONSULTA
