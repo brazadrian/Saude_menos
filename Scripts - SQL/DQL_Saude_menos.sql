@@ -126,17 +126,44 @@ ORDER BY cst.data_consulta;
 
 /*
 9 (NONA) CONSULTA
-Listar nome de pacientes que moram na mesma rua que o Hospital,
-trazendo as colunas num_prontuario, nome_social, nome, id_diagnostico, cid_sigla e cid_cod
-ordene por paciente. (2 join)
+Listar pacientes que moram no mesmo bairro que o Hospital,
+trazendo as colunas: UF, Cidade, Bairro, nome do Hospital, nome do Paciente e seu número de Prontuário
+ordenado por paciente
 */
 
+SELECT edrPac.UF, edrPac.Cidade, edrPac.Bairro, edrHsp.Hospital, edrPac.Nome "Paciente", pac.num_prontuario "Prontuário"
+FROM edrHsp
+	INNER JOIN edrPac
+		ON edrPac.Bairro = edrHsp.Bairro
+    INNER JOIN Pacientes AS pac
+		ON edrPac.CPF = pac.cpf
+ORDER BY edrPac.Nome;
 
-SELECT 
+/*
 
-;
+Tabela virtual criada para auxílio nesta consulta (9ª)
 
+Lista com os hospitais e seus respectivos endereços
+Lista com os pacientes e seus respectivos endereços
 
+CREATE VIEW edrHsp AS
+SELECT edr.cep "CEP", edr.bairro "Bairro", edr.cidade "Cidade", edr.estado "UF", hsp.nome "Hospital", hsp.cnes "CNES"
+FROM Enderecos AS edr
+RIGHT JOIN Hospitais AS hsp
+	ON hsp.Enderecos_id_endereco = edr.id_endereco;
+
+CREATE VIEW edrPac AS
+SELECT edr.cep "CEP", edr.bairro "Bairro", edr.cidade "Cidade", edr.estado "UF", pac.nome "Nome", pac.cpf "CPF"
+FROM Enderecos AS edr
+RIGHT JOIN Pacientes AS pac
+	ON pac.Enderecos_id_endereco = edr.id_endereco;
+    
+SELECT * FROM Pacientes
+INNER JOIN Enderecos ON Enderecos.id_endereco = Pacientes.Enderecos_id_endereco;
+
+Tabela virtual criada para auxílio nesta consulta (9ª)
+
+*/
 
 /*
 10 (DÉCIMA) CONSULTA
