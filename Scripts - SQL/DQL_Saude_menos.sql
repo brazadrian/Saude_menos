@@ -132,6 +132,12 @@ ordene por paciente. (2 join)
 */
 
 
+SELECT 
+
+;
+
+
+
 /*
 10 (DÉCIMA) CONSULTA
 Listar a quantidade de casos de câncer e separar por sexo acometidos

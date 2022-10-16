@@ -108,6 +108,26 @@ Informe a soma de consultas realizadas por dia,
 trazendo as colunas data_consulta, nome do médico, especialidade, sexo e email. (join)
 */
 
+/*VIEW BASE PARA A 9ª CONSULTA
+Lista com os hospitais e seus respectivos endereços
+Lista com os pacientes e seus respectivos endereços
+*/
+
+CREATE VIEW edrHsp AS
+SELECT edr.cep "CEP", edr.bairro "Bairro", edr.cidade "Cidade", edr.estado "UF", hsp.nome "Hospital", hsp.cnes "CNES"
+FROM Enderecos AS edr
+RIGHT JOIN Hospitais AS hsp
+	ON hsp.Enderecos_id_endereco = edr.id_endereco;
+
+CREATE VIEW edrPac AS
+SELECT edr.cep "CEP", edr.bairro "Bairro", edr.cidade "Cidade", edr.estado "UF", pac.nome "Nome", pac.cpf "CPF"
+FROM Enderecos AS edr
+RIGHT JOIN Pacientes AS pac
+	ON pac.Enderecos_id_endereco = edr.id_endereco;
+    
+SELECT * FROM Pacientes
+INNER JOIN Enderecos ON Enderecos.id_endereco = Pacientes.Enderecos_id_endereco;
+
 
 /*
 9 (NONA) CONSULTA
