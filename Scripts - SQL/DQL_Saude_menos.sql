@@ -228,15 +228,15 @@ trazendo as colunas total de médicos e especialidade. (join)
 
 /*
 15 (DÉCIMA QUINTA) CONSULTA
-Listar os pacientes cujo dd seja igual a “11”,
+Listar os pacientes cujo dd seja igual a “81”,
 trazendo as colunas nome, num_telefone e cep
 ordenar por nome. (2 join)
 */
 
-SELECT p.nome, t.num_telefone, e.cep FROM pacientes as p 
+SELECT p.nome 'Nome' , t.num_telefone 'Número', e.cep 'CEP' FROM Pacientes as p 
 	INNER JOIN Telefones as t on t.num_telefone = p.Telefones_num_telefone
-	INNER JOIN Enderecos as e on e.id_endereco = p.Endereco_id_endereco
-		WHERE t.ddd = ‘11’
+	INNER JOIN Enderecos as e on e.id_endereco = p.Enderecos_id_endereco
+		WHERE t.ddd = '81'
 ORDER BY p.nome;
 
 -- -----------------------------------------------------
@@ -247,15 +247,24 @@ Listar os pacientes que tem o sobrenome “Silva” e não realizaram nenhum exa
 trazendo as colunas num_prontuario, cpf, nome, nome_social e sexo.
 */
 
-SELECT p.num_prontuario, p.cpf, p.nome, p.nome_social, p.sexo FROM paciente as p 
-INNER JOIN Exames as ex ON ex.Pacientes_num_prontuario = p.num_prontuario
-	WHERE ex.id_exame is null AND p.nome LIKE %Silva%;
+SELECT p.num_prontuario, p.cpf, p.nome, p.nome_social FROM Pacientes as p 
+INNER JOIN Consultas as c ON c.Pacientes_num_prontuario
+	WHERE  p.nome LIKE '%Silva%';
 
 -- -----------------------------------------------------
 
 /*
 17 (DÉCIMA SÉTIMA) CONSULTA
 */
+
+SELECT nome, num_prontuario FROM Pacientes
+WHERE Pacientes.Enderecos_id_endereco = 21;
+
+SELECT DISTINCT p.Enderecos_id_endereco FROM  Pacientes AS p;
+
+SELECT p.Enderecos_id_endereco, p.nome, p.nome_social, p.Telefones_ddd, p.Telefones_num_telefone FROM Pacientes AS p
+HAVING p.Enderecos_id_endereco = (SELECT DISTINCT p.Enderecos_id_endereco FROM  Pacientes AS p);
+
 
 -- -----------------------------------------------------
 
@@ -293,5 +302,36 @@ SELECT p.nome 'Paciente', t.num_telefone 'Telefone'
 FROM telefones AS t
 INNER JOIN pacientes AS p ON p.Telefones_ddd = t.ddd
 ORDER BY p.nome;
+------------------------------------------------------------
 
--- -----------------------------------------------------
+select p.nome 'Paciente', t.num_telefone 'Telefone'
+from telefones as t
+inner join pacientes as p on p.Telefones_ddd = t.ddd
+order by p.nome;
+
+
+SELECT p.nome 'Paciente', p.Telefones_num_telefone 'Telefone'
+FROM Telefones AS t
+INNER JOIN Pacientes AS p ON p.Telefones_ddd = t.ddd
+INNER JOIN Pacientes ON p.Telefones_num_telefone = t.num_telefone
+ORDER BY p.nome;
+/* ao menos tá montrando os 25 pacientes */
+
+SELECT pac.nome 'Paciente', pac.Telefones_num_telefone 'Telefone'
+FROM Telefones AS tel
+INNER JOIN Pacientes AS pac ON pac.Telefones_ddd = tel.ddd AND pac.Telefones_num_telefone = tel.num_telefone
+ORDER BY pac.nome;
+
+SELECT p.nome 'Paciente', p.Telefones_num_telefone 'Telefone'
+FROM Pacientes AS p
+ORDER BY p.nome;
+
+-------------------------------------------------------
+
+/*
+21 (VIGÉSIMA PRIMEIRA) CONSULTA
+Média salarial dos médicos que trabalham no Hospital Gilmarzito.
+*/
+
+SELECT AVG(m.salario) FROM Medicos AS m
+WHERE m.Hospitais_cnes = '7828463';
