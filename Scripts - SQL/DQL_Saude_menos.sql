@@ -184,154 +184,176 @@ Tabela virtual criada para auxílio nesta consulta (9ª)
 
 /*
 10 (DÉCIMA) CONSULTA
-Listar a quantidade de casos de câncer e separar por sexo acometidos
-trazendo as colunas sexo e nome_patologia
-ordenar por ordem decrescente. (join)
+Listar a quantidade de casos doenças diagnosticadas
+trazendo o nome da doença e quantidade de diagnósticos
+ordenar da doença mais diagnosticada para a menos diagnosticada.
 */
+
+SELECT dgc.nome_patologia "Doença", COUNT(dgc.nome_patologia) "Qtd. Diagnósticos"
+	FROM Diagnosticos AS dgc
+GROUP BY dgc.nome_patologia
+ORDER BY COUNT(dgc.nome_patologia) DESC;
 
 -- -----------------------------------------------------
 
 /*
 11 (DÉCIMA PRIMEIRA) CONSULTA
-Listar a quantidade das diferentes patologias registradas e separar por medicos envolvidos no tratamento
-trazendo as colunas medicos e nome_patologia
-ordenar por ordem crescente. (join)
+Listar a quantidade de vezes que os médicos diagnosticaram algum paciente
+trazendo as colunas Quantidade de diagnósticos, nome do médico e seu CRM
+ordenar por ordem Quantidade de  diagnósticos e depois pelo Nome do médico
 */
+SELECT COUNT(dgc.nome_patologia) "Diagnósticos", med.nome "Médico", med.crm "CRM"
+	FROM Diagnosticos AS dgc 
+		INNER JOIN Medicos AS med
+			ON med.cpf = dgc.Medicos_cpf
+	GROUP BY med.nome 
+	ORDER BY `Diagnósticos` DESC, med.nome;
 
 -- -----------------------------------------------------
 
 /*
 12 (DÉCIMA SEGUNDA) CONSULTA
-Listar os medicos, juntamente com os hospitais que trabalham e a quantidade de pacientes atendidos
-trazer as colunas nome (médico), nome (hospital)
-ordene por Hospital. (2 join)
+Listar os medicos, juntamente com os hospitais que eles trabalham e a quantidade de pacientes atendidos
+trazer as colunas nome do médico, CRM, nome hospital e qtd de atendimentos
+ordene por Hospitais e depois por Médicos
 */
+
+SELECT med.nome "Médico", hsp.nome "Hospital", COUNT(cst.Pacientes_num_prontuario) "Pacientes atendidos"
+	FROM Hospitais AS hsp 
+		INNER JOIN Medicos AS med  
+			ON hsp.cnes = med.Hospitais_cnes
+		INNER JOIN Consultas AS cst
+			ON med.cpf = cst.Medicos_cpf
+	GROUP BY med.cpf
+	ORDER BY hsp.nome, med.nome;
 
 -- -----------------------------------------------------
 
 /*
 13 (DÉCIMA TERCEIRA) CONSULTA
-Informe a soma de solicitações realizadas por dia
-trazendo as colunas data (solicitação), nome do hospital e nome laboratório
-ordene por hospital. (2 join)
+Conte a quantidade de solicitações realizadas dos hospitais aos laboratórios
+trazendo as colunas (quantidade de) Solicitações, Hospital e Laboratório
+ordene por Hospital
 */
+
+SELECT COUNT(slt.id_solicitacao) "Solicitações", hsp.nome "Hospiptal", lab.nome "Laboratório"
+	FROM Solicitacoes AS slt
+		INNER JOIN Hospitais AS hsp
+			ON slt.Hospitais_cnes = hsp.cnes
+		INNER JOIN Laboratorios AS lab
+			ON slt.Laboratorios_cnes = lab.cnes
+	GROUP BY hsp.nome, lab.nome
+	ORDER BY hsp.nome;
 
 -- -----------------------------------------------------
 
 /*
 14 (DÉCIMA QUARTA) CONSULTA
-Listar as especialidades contabilizando o número total de médicos por especialidade do hospital “xxxx”
-trazendo as colunas total de médicos e especialidade. (join)
+Listar a quantidade de ḿédicos especialistas dos hospitais
+trazendo a quantidade, sua especialidade e o nome do hospital em que trabalha
 */
+
+SELECT COUNT(med.especialidade) "Especialistas", med.especialidade "Especialidade", hsp.nome "Hospital"
+	FROM Medicos AS med
+		INNER JOIN Hospitais AS hsp
+			ON med.Hospitais_cnes = hsp.cnes
+	GROUP BY med.rqe
+	ORDER BY hsp.cnes;
 
 -- -----------------------------------------------------
 
 /*
 15 (DÉCIMA QUINTA) CONSULTA
 Listar os pacientes cujo dd seja igual a “81”,
-trazendo as colunas nome, num_telefone e cep
-ordenar por nome. (2 join)
+trazendo as colunas nome, ddd, num_telefone e cep
+ordenar por nome do paciente
 */
 
-SELECT p.nome 'Nome' , t.num_telefone 'Número', e.cep 'CEP' FROM Pacientes as p 
-	INNER JOIN Telefones as t on t.num_telefone = p.Telefones_num_telefone
-	INNER JOIN Enderecos as e on e.id_endereco = p.Enderecos_id_endereco
-		WHERE t.ddd = '81'
-ORDER BY p.nome;
+SELECT pac.nome 'Nome' , tel.ddd "DDD", tel.num_telefone 'Número', edr.rua "Logradouro", edr.bairro "Bairro", edr.cidade "Cidade", edr.cep 'CEP'
+	FROM Pacientes AS pac
+		INNER JOIN Telefones AS tel
+			ON tel.num_telefone = pac.Telefones_num_telefone
+		INNER JOIN Enderecos AS edr
+			ON edr.id_endereco = pac.Enderecos_id_endereco
+			WHERE tel.ddd = '81'
+	ORDER BY pac.nome;
 
 -- -----------------------------------------------------
 
 /*
 16 (DÉCIMA SEXTA) CONSULTA
-Listar os pacientes que tem o sobrenome “Silva” e não realizaram nenhum exame,
+Listar os pacientes que tem o sobrenome “Silva” e não realizaram nenhuma consulta,
 trazendo as colunas num_prontuario, cpf, nome, nome_social e sexo.
 */
 
-SELECT p.num_prontuario, p.cpf, p.nome, p.nome_social FROM Pacientes as p 
-INNER JOIN Consultas as c ON c.Pacientes_num_prontuario
-	WHERE  p.nome LIKE '%Silva%';
+SELECT pac.num_prontuario, pac.cpf, pac.nome, pac.nome_social, cst.data_consulta
+	FROM Pacientes as pac
+		INNER JOIN Consultas as cst
+			ON cst.Pacientes_num_prontuario = pac.num_prontuario AND cst.data_consulta IS NOT NULL
+	WHERE pac.nome LIKE '%Silva%';
 
 -- -----------------------------------------------------
 
 /*
 17 (DÉCIMA SÉTIMA) CONSULTA
+Listar pacientes que moram no mesmo endereço
+Trazendo os campos Nome, id endereço, nome da rua, número, bairro e cidade
+Ordenando pelo id_endereco para juntar todos os que moram na mesma casa
 */
 
-SELECT nome, num_prontuario FROM Pacientes
-WHERE Pacientes.Enderecos_id_endereco = 21;
-
-SELECT DISTINCT p.Enderecos_id_endereco FROM  Pacientes AS p;
-
-SELECT p.Enderecos_id_endereco, p.nome, p.nome_social, p.Telefones_ddd, p.Telefones_num_telefone FROM Pacientes AS p
-HAVING p.Enderecos_id_endereco = (SELECT DISTINCT p.Enderecos_id_endereco FROM  Pacientes AS p);
-
-
--- -----------------------------------------------------
+SELECT pac.nome "Nome do Paciente", edr.id_endereco "ID-Endereço", edr.rua "Logradouro", edr.numero "Número", edr.bairro "Bairro", edr.cidade "Cidade"
+	FROM Enderecos AS edr
+	INNER JOIN Pacientes AS pac
+		ON pac.Enderecos_id_endereco = edr.id_endereco
+	ORDER BY edr.id_endereco;
 
 /*
 18 (DÉCIMA OITAVA) CONSULTA
 Listar nome, número de prontuario e data de nascimento de pacientes que nasceram entre 1940 1980.
-*/ 
+Ordenar do mais velho para o mais novo
+*/
 
-/* CREATE VIEW pacientes_40mais AS */
-SELECT nome, data_nascimento, num_prontuario FROM Pacientes
-	WHERE data_nascimento BETWEEN '1940-01-01' AND '1980-01-01'
-	ORDER BY data_nascimento;
+SELECT pac.nome "Nome", pac.data_nascimento "Data de nascimento", pac.num_prontuario "Prontuário"
+	FROM Pacientes AS pac
+		WHERE pac.data_nascimento BETWEEN '1940-01-01' AND '1980-12-31'
+	ORDER BY pac.data_nascimento ASC;
 
--- -----------------------------------------------------
 
 /*
 19 (DÉCIMA NONA) CONSULTA
-Lista dos hospitais e médicos localizados no bairro da Boa Vista, trazendo as colunas (bairro, nome hospital, nome médico).
+Lista dos hospitais localizados no bairro da Boa Vista
+trazendo as colunas (bairro e hospital).
 */
 
-SELECT e.bairro 'Bairro', h.nome 'Hospital', m.nome 'medico'
-FROM enderecos AS e
-LEFT JOIN hospitais AS h ON h.Enderecos_id_endereco = e.id_endereco
-LEFT JOIN medicos AS m ON m.Enderecos_id_endereco = e.id_endereco
-WHERE e.bairro = 'Boa Vista';
+SELECT edr.bairro 'Bairro', hsp.nome 'Hospital'
+	FROM Enderecos AS edr
+		INNER JOIN Hospitais AS hsp
+			ON hsp.Enderecos_id_endereco = edr.id_endereco
+	WHERE edr.bairro = 'Boa Vista';
 
--- -----------------------------------------------------
 
 /*
 20 (VIGÉSIMA) CONSULTA
-Lista dos telefones dos pacientes, trazendo as colunas (número telefone, nome paciente), ordenado por nome paciente.
+Lista dos telefones dos pacientes, trazendo as colunas (número telefone, nome paciente)
+ordenado por nome paciente.
 */
 
-SELECT p.nome 'Paciente', t.num_telefone 'Telefone'
-FROM telefones AS t
-INNER JOIN pacientes AS p ON p.Telefones_ddd = t.ddd
-ORDER BY p.nome;
-------------------------------------------------------------
-
-select p.nome 'Paciente', t.num_telefone 'Telefone'
-from telefones as t
-inner join pacientes as p on p.Telefones_ddd = t.ddd
-order by p.nome;
-
-
-SELECT p.nome 'Paciente', p.Telefones_num_telefone 'Telefone'
-FROM Telefones AS t
-INNER JOIN Pacientes AS p ON p.Telefones_ddd = t.ddd
-INNER JOIN Pacientes ON p.Telefones_num_telefone = t.num_telefone
-ORDER BY p.nome;
-/* ao menos tá montrando os 25 pacientes */
-
-SELECT pac.nome 'Paciente', pac.Telefones_num_telefone 'Telefone'
+SELECT pac.nome 'Paciente', pac.Telefones_ddd "DDD", pac.Telefones_num_telefone 'Telefone'
 FROM Telefones AS tel
-INNER JOIN Pacientes AS pac ON pac.Telefones_ddd = tel.ddd AND pac.Telefones_num_telefone = tel.num_telefone
+    INNER JOIN Pacientes AS pac
+		ON pac.Telefones_ddd = tel.ddd AND pac.Telefones_num_telefone = tel.num_telefone
 ORDER BY pac.nome;
 
-SELECT p.nome 'Paciente', p.Telefones_num_telefone 'Telefone'
-FROM Pacientes AS p
-ORDER BY p.nome;
-
--------------------------------------------------------
 
 /*
 21 (VIGÉSIMA PRIMEIRA) CONSULTA
 Média salarial dos médicos que trabalham no Hospital Gilmarzito.
 */
 
-SELECT AVG(m.salario) FROM Medicos AS m
-WHERE m.Hospitais_cnes = '7828463';
+SELECT AVG(med.salario) "Média Salarial", med.Hospitais_cnes
+	FROM Medicos AS med
+WHERE med.Hospitais_cnes = (
+	SELECT hsp.cnes
+		FROM Hospitais AS hsp
+	WHERE hsp.nome = "Hospital Gilmarzito"
+);
