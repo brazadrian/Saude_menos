@@ -47,16 +47,16 @@ SELECT pac.num_prontuario "Prontuário", pac.nome "Nome", pac.cpf "CPF", pac.sex
 /*
 4 (QUARTA) CONSULTA (incompleta)
 Listar nome de pacientes e a quantidade de consultas realizadas por eles
-trazendo as colunas num_prontuario, cpf, nome, sexo
+trazendo as colunas num_prontuario,nome, sexo, cpf e a quantidade de consutlas
 ordenado pelo nome.
 */
-
-SELECT pac.num_prontuario "Nº Prontuário", pac.cpf "CPF", pac.nome "Nome", pac.sexo "Sexo", COUNT(cst.Pacientes_num_prontuario) "Consultas"
+        
+SELECT pac.num_prontuario "Nº Prontuário", pac.nome "Nome", pac.sexo "Sexo", pac.cpf, COUNT(cst.data_consulta) "Consultas"
 	FROM Consultas AS cst
 		INNER JOIN Pacientes AS pac
-        ON pac.num_prontuario = cst.Pacientes_num_prontuario
+			ON cst.Pacientes_num_prontuario = pac.num_prontuario
         WHERE cst.data_consulta IS NOT NULL
-        GROUP BY cst.Pacientes_num_prontuario
+        GROUP BY (pac.num_prontuario)
         ORDER BY pac.nome;
 
 -- -----------------------------------------------------
@@ -78,20 +78,18 @@ SELECT med.cpf "CPF", med.crm "CRM", med.nome "Nome", med.salario "Salário", e.
 -- -----------------------------------------------------
 
 /*
-6 (SEXTA) CONSULTA
-Listar os médicos que ganham acima da média salarial de todos os médicos da especialidade Ginecologistas,
-trazendo as colunas cpf, crm, nome, especialidade, salario e bairro
+5 (QUINTA) CONSULTA
+Listar os médicos que ganham menos que a média salarial de todos os médicos cadastrados,
+trazendo as colunas cpf, crm, nome, especialidade, salario e bairro 
 ordenado por nome do médico.
 */
 
-SELECT med.cpf "CPF", med.crm "CRM", med.nome "Nome", med.especialidade "Especialidade", med.salario "Salário", edr.bairro "Bairro"
-	FROM Medicos med
-		INNER JOIN Enderecos AS edr
-			ON med.Enderecos_id_endereco = edr.id_endereco
-		WHERE med.especialidade LIKE "Ginecologi%"
-		GROUP BY med.cpf, med.crm, med.nome, med.especialidade, med.salario, edr.bairro
-		HAVING `salario` > (SELECT AVG(salario) FROM Medicos)
-            ORDER BY med.nome;
+SELECT med.cpf "CPF", med.crm "CRM", med.nome "Nome", med.salario "Salário", e.bairro "Bairro"
+	FROM Medicos AS med
+		LEFT JOIN Enderecos e ON med.Enderecos_id_endereco = e.id_endereco
+        GROUP BY med.cpf, med.crm, med.nome, med.salario, e.bairro
+		HAVING salario < (SELECT AVG(salario) FROM Medicos)
+			ORDER BY med.nome;
 
 -- -----------------------------------------------------
 
@@ -154,25 +152,8 @@ ORDER BY edrPac.Nome;
 
 Tabela virtual criada para auxílio nesta consulta (9ª)
 
-Lista com os hospitais e seus respectivos endereços
-Lista com os pacientes e seus respectivos endereços
-
-CREATE VIEW edrHsp AS
-SELECT edr.cep "CEP", edr.bairro "Bairro", edr.cidade "Cidade", edr.estado "UF", hsp.nome "Hospital", hsp.cnes "CNES"
-FROM Enderecos AS edr
-RIGHT JOIN Hospitais AS hsp
-	ON hsp.Enderecos_id_endereco = edr.id_endereco;
-
-CREATE VIEW edrPac AS
-SELECT edr.cep "CEP", edr.bairro "Bairro", edr.cidade "Cidade", edr.estado "UF", pac.nome "Nome", pac.cpf "CPF"
-FROM Enderecos AS edr
-RIGHT JOIN Pacientes AS pac
-	ON pac.Enderecos_id_endereco = edr.id_endereco;
-    
-SELECT * FROM Pacientes
-INNER JOIN Enderecos ON Enderecos.id_endereco = Pacientes.Enderecos_id_endereco;
-
-Tabela virtual criada para auxílio nesta consulta (9ª)
+Lista com os hospitais e seus respectivos endereços (edrHsp)
+Lista com os pacientes e seus respectivos endereços (edrPac)
 
 */
 
@@ -222,7 +203,7 @@ SELECT med.nome "Médico", hsp.nome "Hospital", COUNT(cst.Pacientes_num_prontuar
 			ON med.cpf = cst.Medicos_cpf
 	GROUP BY med.cpf
 	ORDER BY hsp.nome, med.nome;
-
+    
 -- -----------------------------------------------------
 
 /*
@@ -260,8 +241,8 @@ SELECT COUNT(med.especialidade) "Especialistas", med.especialidade "Especialidad
 
 /*
 15 (DÉCIMA QUINTA) CONSULTA
-Listar os pacientes cujo dd seja igual a “81”,
-trazendo as colunas nome, ddd, num_telefone e cep
+Listar os pacientes cujo DDD seja igual a “81”,
+trazendo as colunas nome, DDD, num_telefone e cep
 ordenar por nome do paciente
 */
 
