@@ -35,6 +35,7 @@ SELECT med.cpf, med.crm, med.nome, med.especialidade, tel.num_telefone
 Listar os pacientes que são do bairro de Santo Antônio e possuem ao menos 1 exame realizado,
 trazendo as colunas num_prontuario, nome, cpf, sexo e nome_exame
 */
+
 SELECT pac.num_prontuario "Prontuário", pac.nome "Nome", pac.cpf "CPF", pac.sexo "Sexo", exa.nome_exame "Exame"
 	FROM Pacientes as pac
 	INNER JOIN Enderecos AS edr ON edr.id_endereco = pac.Enderecos_id_endereco
@@ -49,19 +50,14 @@ Listar nome de pacientes e a quantidade de consultas realizadas por eles
 trazendo as colunas num_prontuario, cpf, nome, sexo
 ordenado pelo nome.
 */
-SELECT pac.num_prontuario "Nº Prontuário", pac.cpf "CPF", pac.nome "Nome", pac.sexo "Sexo", cst.data_consulta "Consulta", COUNT(cst.Pacientes_num_prontuario) ""
+
+SELECT pac.num_prontuario "Nº Prontuário", pac.cpf "CPF", pac.nome "Nome", pac.sexo "Sexo", COUNT(cst.Pacientes_num_prontuario) "Consultas"
 	FROM Consultas AS cst
 		INNER JOIN Pacientes AS pac
         ON pac.num_prontuario = cst.Pacientes_num_prontuario
         WHERE cst.data_consulta IS NOT NULL
-        GROUP BY cst.Pacientes_num_prontuario, pac.num_prontuario, pac.cpf, pac.nome, pac.sexo, cst.data_consulta
+        GROUP BY cst.Pacientes_num_prontuario
         ORDER BY pac.nome;
-        
-/*
-SELECT COUNT(cst.Pacientes_num_prontuario), cst.data_consulta
-	FROM Consultas AS cst
-		INNER JOIN Pacientes AS pac;
-*/
 
 -- -----------------------------------------------------
 
@@ -131,8 +127,8 @@ SELECT
     COUNT(cst.Medicos_cpf) "Consultas",
     med.nome "Médico"
 FROM Consultas AS cst
-INNER JOIN Medicos AS med
-ON cst.Medicos_cpf = med.cpf
+	INNER JOIN Medicos AS med
+		ON cst.Medicos_cpf = med.cpf
 WHERE cst.data_consulta IS NOT NULL
 GROUP BY(Dia)
 ORDER BY cst.data_consulta;
@@ -318,7 +314,6 @@ SELECT pac.nome "Nome", pac.data_nascimento "Data de nascimento", pac.num_prontu
 		WHERE pac.data_nascimento BETWEEN '1940-01-01' AND '1980-12-31'
 	ORDER BY pac.data_nascimento ASC;
 
-
 /*
 19 (DÉCIMA NONA) CONSULTA
 Lista dos hospitais localizados no bairro da Boa Vista
@@ -331,7 +326,6 @@ SELECT edr.bairro 'Bairro', hsp.nome 'Hospital'
 			ON hsp.Enderecos_id_endereco = edr.id_endereco
 	WHERE edr.bairro = 'Boa Vista';
 
-
 /*
 20 (VIGÉSIMA) CONSULTA
 Lista dos telefones dos pacientes, trazendo as colunas (número telefone, nome paciente)
@@ -343,7 +337,6 @@ FROM Telefones AS tel
     INNER JOIN Pacientes AS pac
 		ON pac.Telefones_ddd = tel.ddd AND pac.Telefones_num_telefone = tel.num_telefone
 ORDER BY pac.nome;
-
 
 /*
 21 (VIGÉSIMA PRIMEIRA) CONSULTA
